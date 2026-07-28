@@ -1,0 +1,77 @@
+name: Propose a new control
+description: A risk the framework does not cover, or covers only implicitly.
+title: "[Propose] "
+labels: ["feedback", "new-control"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening this, check the [README index](../blob/main/README.md#risk-domains) — the risk may already be covered under a different name.
+  - type: dropdown
+    id: domain
+    attributes:
+      label: NIST AI 600-1 risk domain
+      description: Which domain does this belong to? Pick "New domain needed" only if it genuinely fits none.
+      options:
+        - CBRN (Chemical, Biological, Radiological, Nuclear)
+        - Confabulation (Hallucinations)
+        - Dangerous, Violent, or Hateful Content
+        - Data Privacy
+        - Environmental Impacts
+        - Harmful Bias & Homogenization
+        - Human-AI Configuration & Overreliance
+        - Information Integrity
+        - Information Security
+        - Intellectual Property
+        - Obscene, Degrading, or Abusive Content
+        - Value Chain & Component Integration
+        - New domain needed
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: Risk name
+      description: Short noun phrase, e.g. "Ambient authority exploitation".
+    validations:
+      required: true
+  - type: textarea
+    id: definition
+    attributes:
+      label: Risk definition
+      description: One or two sentences. What goes wrong, stated neutrally.
+    validations:
+      required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Real-world scenario
+      description: A concrete failure. Link a public incident, advisory, or paper if one exists.
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Proposed severity
+      options: ["High", "Medium", "Low"]
+    validations:
+      required: true
+  - type: textarea
+    id: tiers
+    attributes:
+      label: Proposed controls
+      description: What would you do at each tier? Partial drafts are welcome — fill in what you know.
+      value: |
+        **Tier 1 — Define & Constrain:**
+
+        **Tier 2 — Enforce & Monitor:**
+
+        **Tier 3 — Validate & Adapt:**
+    validations:
+      required: true
+  - type: input
+    id: atlas
+    attributes:
+      label: MITRE ATLAS technique
+      description: Technique ID and name, if one maps. Leave blank if none does.
+      placeholder: AML.T0105 — Escape to Host

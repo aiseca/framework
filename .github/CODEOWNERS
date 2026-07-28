@@ -1,0 +1,15 @@
+# Domain owners are auto-requested for review on PRs touching their controls.
+# Replace the placeholder team/handles before making the repo public.
+#
+# Suggested: create @aiseca/board and per-domain teams in the org, then map below.
+
+*                                           @aiseca/board
+
+# controls/information-security/            @aiseca/wg-infosec
+# controls/data-privacy/                    @aiseca/wg-privacy
+# controls/value-chain-component-integration/ @aiseca/wg-supply-chain
+
+# Generated output and build tooling — changes here need a maintainer.
+/dist/                                      @aiseca/board
+/scripts/                                   @aiseca/board
+/.github/                                   @aiseca/board

@@ -1,0 +1,41 @@
+name: Correct a mapping or reference
+description: A NIST AI RMF subcategory, MITRE ATLAS technique, citation, or link is wrong or broken.
+title: "[Mapping] AISECA-XXX-000: "
+labels: ["feedback", "mapping"]
+body:
+  - type: input
+    id: control_id
+    attributes:
+      label: Control ID
+      placeholder: AISECA-CBRN-002
+    validations:
+      required: true
+  - type: dropdown
+    id: field
+    attributes:
+      label: Which field
+      options:
+        - NIST AI RMF subcategories
+        - MITRE ATLAS technique
+        - Reference link (wrong, broken, or unrelated to the control)
+        - Stakeholder
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: current
+    attributes:
+      label: Current value
+    validations:
+      required: true
+  - type: input
+    id: corrected
+    attributes:
+      label: Corrected value
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: A sentence is enough for an obvious fix.

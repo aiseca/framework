@@ -1,0 +1,1376 @@
+[
+  {
+    "id": "AISECA-CBRN-001",
+    "title": "CBRN knowledge enablement",
+    "domain": "CBRN (Chemical, Biological, Radiological, Nuclear)",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Impact – External Harms (AML.T0048); Defense Evasion – LLM Jailbreak (AML.T0054)",
+    "nist_ai_rmf": [
+      "GOV-1",
+      "MAP-3",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [
+      "https://www.rand.org/pubs/research_reports/RRA2977-1.html"
+    ],
+    "risk": "AI provides information that helps someone create, acquire, or use dangerous chemical, biological, radiological, or nuclear materials.",
+    "scenario": "An AI assistant provides step-by-step guidance that lowers the technical barrier for synthesizing a toxic chemical agent, enabling a user without formal training to progress from theoretical understanding to actionable capability.",
+    "tier1": "Define and enforce strict content boundaries prohibiting the generation of actionable CBRN-related guidance, including synthesis methods, material acquisition, weaponization techniques, or procedural steps, while allowing only high-level, non-operational educational information with clear safety framing.",
+    "tier2": "Implement and enforce policy-aligned detection and filtering mechanisms for CBRN-related prompts and outputs, including classification models, keyword/pattern controls, and contextual risk scoring. Monitor for attempts to elicit restricted knowledge (e.g., prompt chaining, obfuscation), trigger safe-response fallbacks, and route high-risk interactions to logging and incident response workflows.",
+    "tier3": "Continuously evaluate system resilience against adversarial probing using red teaming and automated test suites targeting CBRN knowledge extraction techniques. Track metrics such as policy evasion rate, unsafe response frequency, and detection coverage, and iteratively refine controls, detection models, and response strategies based on emerging threat patterns and misuse attempts.",
+    "tooling": "**Categories.** AI Guardrails / AI Firewall (GenAI runtime defense); AI TRiSM; AI Red Teaming (AEV)\n\n**Content safety guardrails & CBRN red-teaming**\n\n- Meta Llama Guard 3 (indiscriminate weapons/CBRN category) — https://github.com/meta-llama/PurpleLlama\n- Google ShieldGemma — https://ai.google.dev/gemma/docs/shieldgemma\n- NVIDIA NeMo Guardrails (topical rails) — https://github.com/NVIDIA/NeMo-Guardrails\n- IBM Granite Guardian — https://github.com/ibm-granite/granite-guardian\nTier 3 validation:\n- Microsoft PyRIT — https://github.com/Azure/PyRIT\n- NVIDIA garak — https://github.com/NVIDIA/garak",
+    "path": "controls/cbrn/AISECA-CBRN-001.md"
+  },
+  {
+    "id": "AISECA-CBRN-002",
+    "title": "Dual-use misuse",
+    "domain": "CBRN (Chemical, Biological, Radiological, Nuclear)",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Resource Development – Obtain Capabilities (AML.T0016); Impact – External Harms (AML.T0048)",
+    "nist_ai_rmf": [
+      "GOV-1",
+      "MAP-3",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://en.wikipedia.org/wiki/Mata_v._Avianca,_Inc"
+    ],
+    "risk": "AI capabilities intended for legitimate purposes are used to support harmful, dangerous, or prohibited activities.",
+    "scenario": "A Day Porter looks up what cleaning chemicals not to mix. The AI outputs a list of dangerous combinations and explains what toxic gases can be produced.",
+    "tier1": "Define review requirements for sensitive dual-use queries by formally identifying the categories of CBRN-adjacent content such as synthesis routes, weaponization methods, dispersal mechanisms, and acquisition pathways that require elevated scrutiny, and establishing clear criteria for what constitutes meaningful uplift versus legitimate educational or research use. Constrain the system by implementing hard refusal boundaries for the highest-risk query types regardless of stated intent, restricting access to detailed technical content in CBRN domains to verified use cases, and requiring legal and safety review before any AI application is deployed in contexts where CBRN dual-use queries are foreseeable.",
+    "tier2": "Enforce review and response workflows by deploying classifiers that detect CBRN-relevant queries in real time, routing flagged inputs through human review or automated refusal pipelines before a response is generated, and maintaining a tiered response framework that distinguishes between queries requiring redirection, partial response, or hard refusal. Monitor by logging all flagged queries and outcomes to build an auditable record, tracking patterns in dual-use query attempts to identify coordinated or escalating misuse, and establishing reporting obligations to relevant authorities where queries indicate credible threat intent.",
+    "tier3": "Continuously validate effectiveness of safeguards by conducting structured red-team exercises that probe CBRN refusal boundaries using both direct and indirect query strategies, measuring whether classifiers and refusal policies hold against novel phrasing, multi-step elicitation, and context manipulation attempts. Adapt by updating detection classifiers and refusal criteria as new attack vectors and dual-use query patterns emerge, aligning controls with evolving biosecurity, export control, and AI safety regulations, and incorporating findings from red-teaming and incident reviews into a continuous improvement cycle for CBRN safeguards.",
+    "tooling": "**Categories.** AI Guardrails (AI TRiSM); AIDR (misuse monitoring); AI Red Teaming (AEV)\n\n**Misuse detection & policy enforcement**\n\n- NVIDIA NeMo Guardrails (tiered response flows) — https://github.com/NVIDIA/NeMo-Guardrails\n- Meta Llama Guard 3 — https://github.com/meta-llama/PurpleLlama\n- IBM Granite Guardian — https://github.com/ibm-granite/granite-guardian\nAdversarial probing of refusal boundaries:\n- Microsoft PyRIT (multi-turn attack orchestration) — https://github.com/Azure/PyRIT\n- NVIDIA garak — https://github.com/NVIDIA/garak",
+    "path": "controls/cbrn/AISECA-CBRN-002.md"
+  },
+  {
+    "id": "AISECA-CONF-001",
+    "title": "Hallucinated outputs",
+    "domain": "Confabulation (Hallucinations)",
+    "severity": "Medium",
+    "mitre_atlas": "No Direct Mapping",
+    "nist_ai_rmf": [
+      "MAP-3",
+      "MEA-1",
+      "MAN-2"
+    ],
+    "stakeholders": [
+      "Builder / Maintainer"
+    ],
+    "references": [
+      "https://en.wikipedia.org/wiki/Mata_v._Avianca,_Inc"
+    ],
+    "risk": "AI generates false or inaccurate information and presents it as factual.",
+    "scenario": "An AI assistant supporting legal research cites a non-existent court precedent with full case details. A junior associate, trusting the output, submits it in a brief, exposing the firm to sanctions.",
+    "tier1": "Publish acceptable use policy prohibiting unverified AI-generated factual claims (e.g. citations, figures, quotes), and define prohibited use cases with strict rules for high-stakes domains. Ground factual use cases in retrieval from authoritative or stewarded sources.",
+    "tier2": "Translate policy into technical enforcement through automated or manual verification against authoritative sources. Require human-in-the-loop review for high-stakes outputs with workflow controls. Track correction rates, flagged output, and user feedback in order to escalate and apportion investigative resources.",
+    "tier3": "Continously test controls and correction metrics to define risk thresholds and high-stakes domains. Conduct periodic sampling of production output for audit purposes to validate automated and human reviewers are catching errors. Benchmark audit results against industry or peer data to continuously strengthen control environment and stay abreast of emerging trends.",
+    "tooling": "**Categories.** LLM Evaluation & AI Observability; AI Guardrails (groundedness checks)\n\n**Groundedness & output validation**\n\n- IBM Granite Guardian (groundedness/answer-relevance detectors) — https://github.com/ibm-granite/granite-guardian\n- NVIDIA NeMo Guardrails (self-check & fact-check rails) — https://github.com/NVIDIA/NeMo-Guardrails\n- MLflow LLM Evaluate (Databricks) — https://github.com/mlflow/mlflow\n- OpenAI Evals (regression suites) — https://github.com/openai/evals",
+    "path": "controls/confabulation/AISECA-CONF-001.md"
+  },
+  {
+    "id": "AISECA-CONF-002",
+    "title": "Incorrect citations or fabricated sources / information",
+    "domain": "Confabulation (Hallucinations)",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Defense Evasion – LLM Trusted Output Components Manipulation (AML.T0067)",
+    "nist_ai_rmf": [
+      "MAP-3",
+      "MEA-1",
+      "MAN-2"
+    ],
+    "stakeholders": [
+      "Builder / Maintainer"
+    ],
+    "references": [
+      "https://www.nytimes.com/2023/05/27/nyregion/chatgpt-lawyers.html"
+    ],
+    "risk": "AI invents sources, references, citations, or supporting evidence that do not actually exist.",
+    "scenario": "An LLM generated report includes fabricated citations that go unnoticed and inform a leadership decision, later requiring retraction.",
+    "tier1": "Define and require verifiable sourcing for all citation-based outputs, restricting the model from presenting unverified or inferred sources as factual",
+    "tier2": "Ensure data provenance by making sure every citation can be traced to a real source and clearly supports the claim; monitor outputs for missing or unsupported citations and trigger fallback or suppression when checks fail",
+    "tier3": "Continuously test citation accuracy using automated evaluations and adversarial scenarios, track false citation rates and grounding coverage, and adapt controls based on observed hallucination and failure patterns",
+    "tooling": "**Categories.** LLM Evaluation & AI Observability; AI Guardrails (grounding rails)\n\n**Citation & source verification**\n\n- NVIDIA NeMo Guardrails (grounding against retrieved sources) — https://github.com/NVIDIA/NeMo-Guardrails\n- IBM Granite Guardian (context relevance/groundedness) — https://github.com/ibm-granite/granite-guardian\n- MLflow LLM Evaluate (Databricks) (citation-accuracy test suites) — https://github.com/mlflow/mlflow\n- OpenAI Evals — https://github.com/openai/evals",
+    "path": "controls/confabulation/AISECA-CONF-002.md"
+  },
+  {
+    "id": "AISECA-DVH-001",
+    "title": "Violence facilitation",
+    "domain": "Dangerous, Violent, or Hateful Content",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Execution – LLM Prompt Injection (AML.T0051); Defense Evasion – LLM Jailbreak (AML.T0054); Impact – External Harms (AML.T0048)",
+    "nist_ai_rmf": [
+      "MAP-3",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://www.asisonline.org/security-management-magazine/latest-news/today-in-security/2026/march/chatbots-violent-attackers/"
+    ],
+    "risk": "AI provides information or guidance that could help someone plan, commit, or encourage violence.",
+    "scenario": "A large regional bank deploys a general-purpose AI assistant accessible to retail banking customers via its mobile app. A user constructs a series of escalating prompts that gradually shift the conversational context away from financial guidance. Within the same session, the model, lacking robust session-level behavioral tracking,  begins responding to queries about harming a named individual, producing actionable guidance that would not have been returned in a fresh session. The bank's trust and safety team only discovers the interaction during a routine audit, weeks after it occurred.",
+    "tier1": "Define clear content boundaries that prohibit the generation of outputs that could facilitate, instruct, enable, or incite physical violence against persons or groups, including tactical guidance, weapon acquisition, targeting information, or operational planning steps. Establish policy documentation that distinguishes prohibited violence-facilitating outputs from permissible content such as news reporting, fiction with appropriate safeguards, and de-escalation guidance. Require that all AI deployments include documented violence-facilitation prohibitions reviewed and approved by the responsible Trust and Safety or Legal function, with explicit coverage of both direct and indirect facilitation vectors including multi-turn session manipulation and persona-based evasion techniques.",
+    "tier2": "Enforce violence-facilitation content policies through a layered detection stack that includes classifier models trained to identify violence-facilitating intent, keyword and semantic pattern controls, and session-level context scoring that detects escalating or manipulative conversation patterns across a multi-turn session. Implement safe-response fallbacks and hard-stop mechanisms that block generation when violence-facilitation signals exceed defined thresholds, with automatic routing to logging and incident response workflows. Monitor for known evasion techniques including multi-turn context manipulation, persona-based prompt injection, and indirect facilitation attempts that avoid explicit language while progressively building toward actionable guidance.",
+    "tier3": "Continuously test violence-facilitation controls using red team exercises and automated adversarial test suites that simulate realistic misuse vectors including multi-turn manipulation, indirect facilitation, and jailbreak attempts that exploit session context drift. Track metrics including evasion rate, unsafe response rate, detection coverage across facilitation vectors, and false positive rates that could degrade legitimate use. Regularly review and adapt content policies, classifier models, and detection thresholds based on findings from red team exercises, post-incident reviews, and emerging misuse patterns observed across the AI threat landscape.",
+    "tooling": "**Categories.** Content Moderation (Trust & Safety); AI Guardrails; AI Red Teaming (AEV)\n\n**Content safety classifiers**\n\n- Meta Llama Guard 3 (violent crimes category) — https://github.com/meta-llama/PurpleLlama\n- Google ShieldGemma (dangerous content) — https://ai.google.dev/gemma/docs/shieldgemma\n- IBM Granite Guardian — https://github.com/ibm-granite/granite-guardian\n- NVIDIA NeMo Guardrails (output rails) — https://github.com/NVIDIA/NeMo-Guardrails\nValidation:\n- Microsoft PyRIT — https://github.com/Azure/PyRIT\n- NVIDIA garak — https://github.com/NVIDIA/garak",
+    "path": "controls/dangerous-violent-hateful-content/AISECA-DVH-001.md"
+  },
+  {
+    "id": "AISECA-DVH-002",
+    "title": "Extremist or hateful outputs",
+    "domain": "Dangerous, Violent, or Hateful Content",
+    "severity": "High",
+    "mitre_atlas": "Conditional: Execution – LLM Prompt Injection (AML.T0051); Defense Evasion – LLM Jailbreak (AML.T0054); Impact – External Harms (AML.T0048)",
+    "nist_ai_rmf": [
+      "MAP-3",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://www.theverge.com/2016/3/24/11297050/tay-microsoft-chatbot-racist"
+    ],
+    "risk": "AI generates content that promotes, supports, or amplifies hateful, extremist, or discriminatory views.",
+    "scenario": "An AI system generates content that reinforces extremist ideologies or produces hateful narratives targeting a protected group, which is then shared publicly and damages brand reputation while contributing to real-world harm.",
+    "tier1": "Define and enforce content policies that prohibit the generation of extremist, violent, or hateful content, including praise, advocacy, or narrative framing that legitimizes such ideologies, while allowing limited contextualized or critical discussion for educational or safety purposes.",
+    "tier2": "Implement detection and filtering mechanisms to identify and block extremist or hateful prompts and outputs, including contextual classification and intent analysis. Monitor for evasion techniques (e.g., coded language, roleplay scenarios), enforce safe-response patterns, and log high-risk interactions for review and incident handling.",
+    "tier3": "Continuously test system behavior using adversarial prompts and red teaming focused on extremist and hateful content generation. Track metrics such as policy violation rates, false negatives, and evasion success rates, and refine detection models and response strategies to address emerging language patterns and threat actors.",
+    "tooling": "**Categories.** Content Moderation (Trust & Safety); AI Guardrails (AI TRiSM)\n\n**Hate/toxicity moderation**\n\n- Meta Llama Guard 3 (hate category) — https://github.com/meta-llama/PurpleLlama\n- Google ShieldGemma (hate/harassment) — https://ai.google.dev/gemma/docs/shieldgemma\n- IBM Granite Guardian (social bias & toxicity detectors) — https://github.com/ibm-granite/granite-guardian\n- NVIDIA NeMo Guardrails (output rails) — https://github.com/NVIDIA/NeMo-Guardrails",
+    "path": "controls/dangerous-violent-hateful-content/AISECA-DVH-002.md"
+  },
+  {
+    "id": "AISECA-PRIV-001",
+    "title": "Prompt-based data leakage",
+    "domain": "Data Privacy",
+    "severity": "High",
+    "mitre_atlas": "Direct: Exfiltration – LLM Data Leakage (AML.T0057)",
+    "nist_ai_rmf": [
+      "MAP-2",
+      "MAN-4"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://gizmodo.com/chatgpt-ai-samsung-employees-leak-data-1850307376"
+    ],
+    "risk": "Sensitive information is unintentionally exposed through prompts, responses, or interactions with an AI system.",
+    "scenario": "An employee working on a sales campaign spreadsheet pastes customer information into an AI assistant to generate copy. The model stores that data and later reuses fragments of it in another user’s session, which exposes proprietary or regulated information",
+    "tier1": "Define restrictions on sensitive data exposure in prompts and outputs, and prevent the model from returning protected data (e.g., PII, MNPI, Client Data, secrets, proprietary content) beyond the active user context",
+    "tier2": "Enforce data loss prevention through output filtering and access controls, and monitor prompts and responses for sensitive data exposure, triggering redaction or blocking when violations are detected",
+    "tier3": "Continuously test for data leakage using adversarial prompts and automated evaluations, track leakage rates and detection effectiveness, and adapt controls based on observed failure patterns and emerging attack techniques",
+    "tooling": "**Categories.** AI-aware DLP; DSPM; AI Guardrails (sensitive-data rails)\n\n**PII/secrets detection & redaction**\n\n- Microsoft Presidio (PII detection & anonymization) — https://github.com/microsoft/presidio\n- Palo Alto Networks LLM Guard (Protect AI) (PII & secrets scanners on prompts/outputs) — https://github.com/protectai/llm-guard\n- NVIDIA NeMo Guardrails (sensitive-data rails) — https://github.com/NVIDIA/NeMo-Guardrails\n- Yelp detect-secrets — https://github.com/Yelp/detect-secrets",
+    "path": "controls/data-privacy/AISECA-PRIV-001.md"
+  },
+  {
+    "id": "AISECA-PRIV-002",
+    "title": "Sensitive data retention",
+    "domain": "Data Privacy",
+    "severity": "High",
+    "mitre_atlas": "Conditional: Collection – Data from AI Services (AML.T0085); Exfiltration – LLM Data Leakage (AML.T0057)",
+    "nist_ai_rmf": [
+      "MAP-2",
+      "MAN-4"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://mashable.com/article/samsung-chatgpt-leak-details"
+    ],
+    "risk": "Sensitive information remains stored, accessible, or recoverable longer than intended.",
+    "scenario": "An HR employee drafts termination letters containing SSNs and salary data. The context persists in logs which resurfaces when they are ingested by a centralized logging tool like Splunk which are indexed & searchable by any engineer with access.",
+    "tier1": "Establish foundational policy that limits sensitive data exposure in unapproved AI systems. Include data handling policy that defines specific classifications (PII, PHI, Regulated Data, etc.) that are prohibited or restricts in AI prompts with clear guidance on approved alternatives (e.g. redaction). Configure AI service settings to observe retention policies, where available.",
+    "tier2": "Translate policy into technical enforcement through data loss prevention, input sanitization/redaction, or other gates to regulate sensitive data exposure to unapproved AI services. Consolidate AI input, output, logging, and other telemetry into centralized logging or observability tools. Analyze ingested content for sensitive data classifications with thresholds that trigger escalation.",
+    "tier3": "Continuously test controls with sampling of production output at each gate to validate automated and human reviewers are catching sensitive data exfiltration. Periodically red-team control pipelines to ensure controls hold under realistic and evolving practices. Continuously adjust controls as regulation evolves.",
+    "tooling": "**Categories.** DSPM; Data Governance / retention management (ILM)\n\n**Data discovery & lifecycle enforcement**\n\n- Microsoft Presidio (find/redact stored PII in transcripts & logs) — https://github.com/microsoft/presidio\n- OpenSearch Index State Management (AWS) (retention policies on conversation/log stores) — https://opensearch.org/docs/latest/im-plugin/ism/index/\n- Elastic ILM — https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html\n- DataHub (LinkedIn-originated) (retention & lineage metadata) — https://github.com/datahub-project/datahub",
+    "path": "controls/data-privacy/AISECA-PRIV-002.md"
+  },
+  {
+    "id": "AISECA-PRIV-003",
+    "title": "Context Injection via Tools or MCP",
+    "domain": "Data Privacy",
+    "severity": "High",
+    "mitre_atlas": "Direct: Execution – LLM Prompt Injection (AML.T0051); Persistence – AI Agent Tool Data Poisoning (AML.T0099); Privilege Escalation – AI Agent Tool Invocation (AML.T0053); Exfiltration – Exfiltration via AI Agent Tool Invocation (AML.T0086)",
+    "nist_ai_rmf": [
+      "MAP-2",
+      "MAN-4"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [],
+    "risk": "Content from connected tools, data sources, or systems manipulates an AI model into behaving in unintended ways.",
+    "scenario": "A wealth management firm deploys an AI assistant connected via MCP to a portfolio analytics tool and an internal document retrieval system. An attacker with write access to the document store embeds hidden natural-language instructions within a PDF investment memo. When a relationship manager asks the AI to summarize the memo, the model processes the embedded instructions, which redirect it to query the portfolio tool for account balances across unrelated client portfolios and append those values to the generated summary. The relationship manager, focused on the legitimate memo content, does not notice the appended data. The attacker retrieves the summary from a shared workspace, exfiltrating client financial data without ever directly accessing the portfolio tool.",
+    "tier1": "Define explicit trust boundaries for all external context that AI systems can ingest through tools, MCP servers, or retrieval-augmented pipelines, establishing that all tool-sourced and externally-retrieved content is untrusted by default and cannot modify system-level behavior or override operator instructions. Require that all AI deployments include a documented inventory of permitted tool integrations and MCP endpoints, each classified by trust level and permitted context contribution. Define prohibited context injection patterns, including instructions embedded in retrieved documents, metadata fields, tool responses, and structured data payloads. Require that all such content be treated as data, not as directives.",
+    "tier2": "Enforce context injection defenses through input validation and sanitization applied to all tool outputs and MCP responses before they are incorporated into model context, stripping or neutralizing content that matches known injection patterns including instruction-like natural language, role-override attempts, and embedded directives. Implement context boundary controls that prevent tool-sourced content from interacting with or overriding system prompt instructions, and monitor tool interaction logs for anomalous context patterns including unusually large tool responses, structured content with instruction-like syntax, and tool outputs that trigger unexpected downstream model behavior. Alert and quarantine interactions where injection indicators are detected.",
+    "tier3": "Continuously test context injection defenses using adversarial scenarios that embed injection payloads across all supported tool and MCP input surfaces, including document retrieval results, API response bodies, structured data fields, and metadata. Track metrics including injection detection rate, false negative rate by input surface type, time-to-detection for novel injection patterns, and downstream impact rate for undetected injections. Conduct regular red team exercises simulating attacker-controlled tool responses and document stores, and adapt sanitization logic, boundary controls, and detection models based on findings. Review and update trust boundary definitions as new tool integrations and MCP endpoints are onboarded.\n\n Note: For risks specific to compromised, untrusted, or malicious MCP endpoints and tool registries — including tool schema poisoning and registry-based attacks — see \"Compromised, Untrusted, or Malicious Agent Tool Ecosystem\" under Value Chain & Component Integration.",
+    "tooling": "**Categories.** AI-SPM / AI Supply Chain Security (MCP & tool scanning); AI Guardrails / AI Firewall; AIDR\n\n**MCP/tool content scanning & injection defense**\n\n- Cisco AI Defense MCP Scanner (tool poisoning, hidden instructions, behavioral code analysis) — https://github.com/cisco-ai-defense/mcp-scanner\n- Snyk MCP-Scan (Invariant Labs) (tool pinning vs. rug-pulls, toxic flow analysis) — https://github.com/invariantlabs-ai/mcp-scan\n- Meta LlamaFirewall (Prompt Guard 2 on tool outputs) — https://github.com/meta-llama/PurpleLlama\n- NVIDIA NeMo Guardrails (input rails) — https://github.com/NVIDIA/NeMo-Guardrails",
+    "path": "controls/data-privacy/AISECA-PRIV-003.md"
+  },
+  {
+    "id": "AISECA-PRIV-004",
+    "title": "Re-identification risk",
+    "domain": "Data Privacy",
+    "severity": "High",
+    "mitre_atlas": "Conditional: Exfiltration – Exfiltration via AI Inference API (AML.T0024)",
+    "nist_ai_rmf": [
+      "MAP-2",
+      "MAN-4"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [
+      "https://www.nature.com/articles/s41467-019-10933-3"
+    ],
+    "risk": "AI enables someone to identify an individual who was intended to remain anonymous.",
+    "scenario": "An AI model generates outputs that, when combined with external data, enable the re-identification of an individual from previously anonymized datasets, exposing sensitive personal information and creating regulatory and legal risk.",
+    "tier1": "Define and enforce restrictions on the use, retention, and generation of sensitive or personal data, including policies that prohibit outputs that could directly or indirectly enable re-identification of individuals from anonymized or aggregated data.",
+    "tier2": "Implement technical controls such as data minimization, de-identification techniques, and privacy-preserving mechanisms (e.g., filtering, access controls) to prevent re-identification risks. Monitor outputs for potential leakage of quasi-identifiers or sensitive attributes and trigger mitigation actions when risk thresholds are exceeded.",
+    "tier3": "Continuously evaluate re-identification risk through privacy testing methods (e.g., simulated linkage attacks, red teaming) and track metrics such as re-identification success rates and sensitive attribute exposure. Adapt data handling practices, model safeguards, and monitoring thresholds in response to evolving privacy risks and regulatory expectations.",
+    "tooling": "**Categories.** PEC (Privacy-Enhancing Computation); Privacy Management; AI TRiSM (model privacy)\n\n**Anonymization & differential privacy**\n\n- Microsoft Presidio — https://github.com/microsoft/presidio\n- Microsoft SmartNoise (OpenDP) — https://github.com/opendp/smartnoise-sdk\n- Google differential-privacy libraries — https://github.com/google/differential-privacy\n- Google TensorFlow Privacy (DP-SGD training) — https://github.com/tensorflow/privacy\n- IBM ai-privacy-toolkit — https://github.com/IBM/ai-privacy-toolkit",
+    "path": "controls/data-privacy/AISECA-PRIV-004.md"
+  },
+  {
+    "id": "AISECA-PRIV-005",
+    "title": "Unauthorized training data use",
+    "domain": "Data Privacy",
+    "severity": "High",
+    "mitre_atlas": "No Direct Mapping",
+    "nist_ai_rmf": [
+      "MAP-2",
+      "MAN-4"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [],
+    "risk": "AI is trained using data without appropriate authorization, consent, or legal rights.",
+    "scenario": "A corporation trains an internal AI assistant on unfiltered HR records — including employee names, salaries, performance ratings, and medical leave history. When a manager later prompts the tool to suggest performance review language for employees who take frequent leave, the model surfaces details closely mirroring a specific employee's mental health history. The company now faces discrimination claims, HIPAA and ADA violations, and cannot simply delete the data — as it is embedded in the model's weights and would require a full, costly retraining to remediate.",
+    "tier1": "Define a formal data classification schema that assigns sensitivity levels to all organizational data, explicitly designating the most restricted categories as off-limits for AI ingestion, and document this in a written AI acceptable use policy that covers both internal systems and third-party vendors with embedded AI features. Constrain access by enforcing role-based controls so AI systems cannot reach protected datastores, physically or logically segregating sensitive datasets from shared data lakes and AI pipelines, requiring vendor contracts to prohibit model training on your data, and mandating approved anonymization standards before any internal data can be considered for AI use.",
+    "tier2": "Enforce protections by deploying automated ingestion gates that scan for classification tags and sensitive data patterns before any dataset enters a training or fine-tuning workflow, extending DLP policies to block restricted data from being input into AI tools or APIs, and requiring formal stakeholder sign-off before any internal dataset is approved for AI use. Monitor by enabling comprehensive audit logging on all AI data flows (capturing input source, user identity, and timestamp) and configuring anomaly detection on sensitive datastores to alert on bulk exports, unusual access patterns, or activity outside normal operational behavior.",
+    "tier3": "Validate by periodically auditing what data has actually been ingested into deployed models ncluding fine-tuned and retrieval-augmented systems and using targeted output probing to surface any memorized sensitive content, treating user-reported concerns as an additional validation signal. Adapt by maintaining a documented machine unlearning procedure for affected models, keeping an incident response playbook ready for data contamination events, aligning controls with applicable regulations such as GDPR, CCPA, and the EU AI Act, and reinforcing all controls with ongoing employee education on data boundaries and reporting obligations.",
+    "tooling": "**Categories.** Data & Analytics Governance (catalog/lineage); AI Governance\n\n**Data governance & lineage**\n\n- DataHub (LinkedIn-originated) (dataset lineage, ownership & consent metadata) — https://github.com/datahub-project/datahub\n- Unity Catalog (Databricks) (access/usage governance) — https://github.com/unitycatalog/unitycatalog\n- Google TensorFlow Data Validation (dataset intake checks) — https://github.com/tensorflow/data-validation",
+    "path": "controls/data-privacy/AISECA-PRIV-005.md"
+  },
+  {
+    "id": "AISECA-PRIV-006",
+    "title": "Markdown Rendering Exfiltration",
+    "domain": "Data Privacy",
+    "severity": "Medium",
+    "mitre_atlas": "Direct: Exfiltration – LLM Data Leakage (AML.T0057); Conditional: Execution – LLM Prompt Injection (AML.T0051)",
+    "nist_ai_rmf": [
+      "MAP-2",
+      "MAN-4"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://blog.cyberdesserts.com/prompt-injection-attacks/"
+    ],
+    "risk": "AI-generated Markdown triggers external resource requests that disclose sensitive data or contextual information.",
+    "scenario": "AI-generated Markdown leaks sensitive information through external resource requests.",
+    "tier1": "Define restrictions on markdown and rich content rendering in AI system outputs, prohibiting the generation of external resource references — including images, links, and iframes — that could transmit data to attacker-controlled endpoints. Require that all AI deployments in browser or rich-client contexts include a documented content security policy governing outbound resource requests triggered by model outputs.",
+    "tier2": "Enforce markdown exfiltration controls through output sanitization that detects and strips external resource references from AI-generated content before rendering, including image URLs with query parameters, tracking pixels, and redirect chains. Implement Content Security Policy headers in all AI-adjacent UIs that restrict outbound requests to approved domains, and monitor for outbound requests from AI output rendering that deviate from approved baselines.",
+    "tier3": "Continuously test markdown rendering exfiltration defenses using adversarial payloads that embed data-carrying external resource references across all supported markdown and rich content types. Track metrics including exfiltration payload detection rate, CSP violation rate, and data-carrying outbound request rate from AI UI rendering contexts. Adapt sanitization rules and CSP policies based on findings.",
+    "tooling": "**Categories.** AI Guardrails / AI Firewall (output sanitization); AI-aware DLP; AIDR\n\n- Palo Alto Networks LLM Guard (Protect AI) (strip/deny untrusted URLs & active content in outputs) — https://github.com/protectai/llm-guard\n- Meta LlamaFirewall (output filtering) — https://github.com/meta-llama/PurpleLlama\n- NVIDIA NeMo Guardrails (output rails) — https://github.com/NVIDIA/NeMo-Guardrails\n- Content-Security-Policy enforcement (W3C standard) (no-remote-image policies in rendering clients) — https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP\n- Microsoft PyRIT (exfiltration probes for validation) — https://github.com/Azure/PyRIT",
+    "path": "controls/data-privacy/AISECA-PRIV-006.md"
+  },
+  {
+    "id": "AISECA-ENV-001",
+    "title": "Excessive compute consumption",
+    "domain": "Environmental Impacts (energy usage, carbon footprint, resource consumption)",
+    "severity": "Low",
+    "mitre_atlas": "Conditional: Impact – Cost Harvesting (AML.T0034); Impact – Denial of AI Service (AML.T0029)",
+    "nist_ai_rmf": [
+      "MEA-3"
+    ],
+    "stakeholders": [
+      "Builder / Maintainer"
+    ],
+    "references": [
+      "https://www.theregister.com/security/2026/03/03/dev-stunned-by-82k-gemini-api-key-bill-after-theft/4925029"
+    ],
+    "risk": "AI consumes excessive computing resources, creating unnecessary cost, performance, or availability impacts.",
+    "scenario": "A coding assistant with access to a large enterprise codebase enters a recursive loop, spawning thousands of expensive operations as it seeks to iteratively refactor the codebase. Cloud costs spike overnight before anyone notices the runaway process.",
+    "tier1": "Establish policies and configurations that bound AI resource usage. Publish an acceptable use policy defining approved agentic use cases and require budget ownership for workloads above defined thresholds. Technically, configure hard limits on token usage, tool-call depth, concurrency, and other AI metrics, enforce spend caps with budget alerts, and restrict production credentials to vetted & scoped service accounts.",
+    "tier2": "Deploy runtime controls that terminate sessions exceeding token, cost, or other thresholds. Require human approval for long-running or high-cost agentic operations. Apply circuit breakers that detect repetitive tool calls or loops and halt execution. Stream usage telemetry into centralized observability tools with alerting. Monitor for spend spikes and other as-defined activity that trigger automated throttling or escalation.",
+    "tier3": "Test and evolve consumption controls as agents and workloads change. Conduct periodic load testing of agentic workflows, including adversarial prompts designed to induce loops and validate that circuit breakers, budget caps, and escalation mechanisms actually engage. Audit production usage to identify inefficient agents or prompts driving disproportionate spend, and feed findings into updated limits and guardrail logic. Integrate incidents into enterprise risk reporting.",
+    "tooling": "**Categories.** FinOps / Cloud Cost Management; Observability; Sustainability (GreenOps)\n\n**Resource quotas & usage telemetry**\n\n- Kubernetes ResourceQuota/LimitRange (Google/CNCF) — https://kubernetes.io/docs/concepts/policy/resource-quotas/\n- KEDA (Microsoft-originated/CNCF) (demand-based scaling) — https://github.com/kedacore/keda\n- OpenTelemetry (CNCF) — https://opentelemetry.io\n- Datadog Agent (open source) (consumption metering) — https://github.com/DataDog/datadog-agent\n- Cloud Carbon Footprint (Thoughtworks) — https://github.com/cloud-carbon-footprint/cloud-carbon-footprint",
+    "path": "controls/environmental-impacts/AISECA-ENV-001.md"
+  },
+  {
+    "id": "AISECA-ENV-002",
+    "title": "Inefficient inference or training",
+    "domain": "Environmental Impacts (energy usage, carbon footprint, resource consumption)",
+    "severity": "Low",
+    "mitre_atlas": "No Direct Mapping",
+    "nist_ai_rmf": [
+      "MEA-3"
+    ],
+    "stakeholders": [
+      "Builder / Maintainer"
+    ],
+    "references": [
+      "https://en.wikipedia.org/wiki/Artificial_intelligence_and_climate_change"
+    ],
+    "risk": "AI models use more processing power, time, or infrastructure than necessary to perform their intended function.",
+    "scenario": "AI takes longer and costs more than it should to run because it isn’t built efficiently. This leads to slow responses and unnecessarily high operating costs.",
+    "tier1": "Define performance, cost, and execution constraints for all AI workloads, including target response times, cost per request, and maximum token usage. Establish model selection policies that prioritize smaller, specialized models where feasible over large general-purpose models. Define acceptable use cases for high-cost models and require justification. Establish baseline controls for efficient execution, including caching strategies, reuse of prior results, and avoidance of redundant model calls. Define maximum runtime and cost thresholds for any single request or workflow.",
+    "tier2": "Enforce efficient and bounded execution through technical controls, including rate limiting on token usage, caps on compute consumption, and restrictions on model selection based on use case. Implement runtime and cost guardrails that automatically interrupt or terminate requests exceeding predefined thresholds. Optimize execution by minimizing redundant computation (e.g., caching, deduplication, batching) and routing workloads to appropriately sized models. Continuously monitor performance, latency, token usage, and cost against defined baselines, and generate alerts when thresholds are exceeded.",
+    "tier3": "Continuously adapt by analyzing performance and cost to identify inefficiencies and refine system efficiency over time. Update performance and cost baselines and models as usage scales to improve speed, reduce waste, and control costs.",
+    "tooling": "**Categories.** ModelOps / MLOps (inference & training optimization)\n\n**Model & inference optimization**\n\n- Microsoft DeepSpeed (training/inference efficiency) — https://github.com/microsoft/DeepSpeed\n- NVIDIA TensorRT-LLM — https://github.com/NVIDIA/TensorRT-LLM\n- NVIDIA Triton Inference Server — https://github.com/triton-inference-server/server\n- Microsoft ONNX Runtime (quantization & graph optimization) — https://github.com/microsoft/onnxruntime",
+    "path": "controls/environmental-impacts/AISECA-ENV-002.md"
+  },
+  {
+    "id": "AISECA-BIAS-001",
+    "title": "Discriminatory outputs",
+    "domain": "Harmful Bias & Homogenization",
+    "severity": "Medium",
+    "mitre_atlas": "No Direct Mapping",
+    "nist_ai_rmf": [
+      "MAP-3",
+      "MEA-2",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [
+      "https://www.cnbc.com/2019/11/11/regulator-probing-goldmans-apple-card-no-room-for-bias-in-algorithms.html"
+    ],
+    "risk": "AI produces outputs or decisions that unfairly disadvantage certain individuals or groups.",
+    "scenario": "A regional bank deploys an AI assistant to support loan officers in drafting preliminary credit assessment narratives for small business applications. The model, fine-tuned on historical loan documentation, generates significantly more skeptical and heavily qualified narratives for businesses owned by applicants from certain demographic backgrounds, using language that signals elevated credit risk without explicit reference to protected characteristics. Loan officers, treating the model's output as a neutral starting point, systematically finalize assessments that reflect the model's biased framing and don't manually review applications. The pattern surfaces only during a fair lending audit eighteen months after deployment, by which time hundreds of applications have been adversely affected.",
+    "tier1": "Define fairness principles and prohibited bias patterns that apply to all AI systems used in decisions or communications that materially affect customers, employees, or counterparties, with explicit coverage of protected characteristics under applicable law and internal equity commitments. Require that AI deployments in high-stakes decision contexts — including credit assessment, fraud scoring, customer service routing, and compliance screening — include documented fairness requirements approved by the responsible Legal and Compliance function, specifying prohibited output patterns, required demographic parity thresholds, and human oversight requirements. Establish model documentation standards that require disclosure of training data demographic composition, known bias evaluations, and use case scope restrictions prior to deployment approval.",
+    "tier2": "Enforce bias detection and mitigation controls through pre-deployment fairness evaluations that test model outputs across demographic subgroups defined by protected characteristics, and through runtime monitoring that tracks output disparities across population segments in production. Implement human review workflows for high-stakes decision contexts that require adjudication when model outputs exceed defined disparity thresholds or exhibit language patterns associated with historically biased framing. Log all model outputs in decision-relevant contexts with sufficient metadata to support retrospective fairness audits, and alert responsible stakeholders when disparity metrics drift beyond established baselines.",
+    "tier3": "Continuously validate fairness controls through scheduled bias evaluations using representative and adversarial test sets that probe for disparate output patterns across protected characteristics and intersectional subgroups. Track metrics including demographic parity ratios, equalized odds gaps, output sentiment disparity by subgroup, and human override rates by demographic segment. Conduct retrospective audits of production decisions to detect disparate impact patterns that may not be visible in per-output monitoring, and adapt model selection, fine-tuning, and prompt engineering in response to findings. Update fairness thresholds and evaluation criteria as regulatory requirements and internal equity standards evolve.",
+    "tooling": "**Categories.** Responsible AI / AI Governance (bias auditing); AI TRiSM\n\n**Bias testing & mitigation**\n\n- IBM AI Fairness 360 — https://github.com/Trusted-AI/AIF360\n- Microsoft Fairlearn — https://github.com/fairlearn/fairlearn\n- Google Fairness Indicators — https://github.com/tensorflow/fairness-indicators\nRuntime output screening:\n- IBM Granite Guardian (social-bias detector) — https://github.com/ibm-granite/granite-guardian",
+    "path": "controls/harmful-bias-homogenization/AISECA-BIAS-001.md"
+  },
+  {
+    "id": "AISECA-BIAS-002",
+    "title": "Exclusionary recommendations",
+    "domain": "Harmful Bias & Homogenization",
+    "severity": "Medium",
+    "mitre_atlas": "No Direct Mapping",
+    "nist_ai_rmf": [
+      "MAP-3",
+      "MEA-2",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [
+      "https://www.reuters.com/article/us-amazon-com-jobs-automation-insight-idUSKCN1MK08G/"
+    ],
+    "risk": "AI recommends, prioritizes, or excludes people in ways that unfairly limit access to opportunities, services, or resources.",
+    "scenario": "An AI-powered recommendation system consistently suggests candidates, vendors, or content that reflect a narrow demographic profile, excluding qualified individuals or perspectives and reinforcing systemic bias in decision-making processes.",
+    "tier1": "Define fairness and inclusion requirements for AI outputs, including constraints that prevent exclusionary or biased recommendations based on protected or sensitive attributes, and establish guidelines for representative and diverse outputs.",
+    "tier2": "Implement bias detection and mitigation controls within model outputs and recommendation logic, including fairness checks, diversity constraints, and monitoring for skewed outcomes across demographic groups. Track and investigate disparities, and enforce corrective actions when bias thresholds are exceeded.",
+    "tier3": "Continuously evaluate system fairness using adversarial testing, representative datasets, and quantitative fairness metrics. Monitor trends in exclusionary outcomes, validate mitigation effectiveness, and refine models and controls to address emerging bias patterns and maintain equitable performance across populations.",
+    "tooling": "**Categories.** Responsible AI / AI Governance (fairness auditing); AI TRiSM\n\n**Fairness auditing of rankings/decisions**\n\n- Microsoft Fairlearn (group fairness metrics & mitigation) — https://github.com/fairlearn/fairlearn\n- IBM AI Fairness 360 — https://github.com/Trusted-AI/AIF360\n- LinkedIn Fairness Toolkit (LiFT) — https://github.com/linkedin/LiFT\n- Google What-If Tool (counterfactual review) — https://github.com/PAIR-code/what-if-tool",
+    "path": "controls/harmful-bias-homogenization/AISECA-BIAS-002.md"
+  },
+  {
+    "id": "AISECA-BIAS-003",
+    "title": "Loss of diversity / homogenized outputs",
+    "domain": "Harmful Bias & Homogenization",
+    "severity": "Medium",
+    "mitre_atlas": "No Direct Mapping",
+    "nist_ai_rmf": [
+      "MAP-3",
+      "MEA-2",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [
+      "https://www.aclu.org/news/womens-rights/why-amazons-automated-hiring-tool-discriminated-against"
+    ],
+    "risk": "AI repeatedly produces similar outputs that reduce diversity of perspectives, ideas, or outcomes.",
+    "scenario": "An HR screening tool is used for hiring engineers at a large company. The tool was trained on data containing minimal representation of women and minorities in STEM roles. As a result, the tool only selects the resumes of candidates with white-male sounding names.",
+    "tier1": "Define explicit diversity and fairness requirements as part of any AI system's design criteria and document these as measurable standards that apply to both training data and expected outputs. Constrain the system by requiring datasets to be audited for skew and underrepresentation before use, prohibiting over-reliance on any single data source or model architecture, and including diversity criteria in vendor and model selection so that homogeneity risk is assessed before deployment.",
+    "tier2": "Enforce diversity standards by deploying automated bias detection tools that evaluate outputs for demographic disparity and narrowing response variance, implementing sampling pipelines that flag clustering around a limited range of perspectives, and establishing diverse human review panels to catch blind spots that automated tools may miss. Monitor by logging output distributions over time, setting threshold alerts when diversity metrics fall below defined baselines, and tracking whether controls are producing genuine improvement rather than surface-level correction.",
+    "tier3": "Validate through regular bias audits and red-team exercises that probe for representation gaps, stereotyping, and output homogeneity across varied contexts, supported by longitudinal fairness metrics and user feedback channels that surface biased or repetitive outputs as a continuous signal. Adapt by applying findings to retrain or fine-tune models, using interventions such as diversity-weighted sampling or output temperature adjustments, aligning with evolving standards like the EU AI Act, and feeding each audit cycle directly into ongoing model improvement.",
+    "tooling": "**Categories.** LLM Evaluation & AI Observability\n\n**Output diversity evaluation**\n\n- MLflow LLM Evaluate (Databricks) (track similarity/diversity metrics over time) — https://github.com/mlflow/mlflow\n- OpenAI Evals — https://github.com/openai/evals\n- Google Learning Interpretability Tool (LIT) (qualitative output analysis) — https://github.com/PAIR-code/lit\n(Big-vendor OSS coverage is thin here; largely an eval-harness problem.)",
+    "path": "controls/harmful-bias-homogenization/AISECA-BIAS-003.md"
+  },
+  {
+    "id": "AISECA-HAIC-001",
+    "title": "Automation bias",
+    "domain": "Human–AI Configuration & Overreliance",
+    "severity": "Medium",
+    "mitre_atlas": "No Direct Mapping",
+    "nist_ai_rmf": [
+      "GOV-2",
+      "MAP-4",
+      "MAN-2"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [],
+    "risk": "People place too much trust in AI outputs and fail to apply appropriate human judgment or verification.",
+    "scenario": "A SOC team configures an AI agent to triage alerts. A genuine intrusion receives a low-priority alert by the model. Analysts, conditioned to trust its scoring, skip manual review and miss an active exploitation.",
+    "tier1": "Establish policies that prevent uncritical reliance on AI outputs in high-stakes domains or other consequential decisions. Require role-based training on automation bias. Where available configure AI services to include model confidence, reasoning, known limitations, and other relevant contextual information alongside output. Avoid defaulting to the AI's recommendation in UI workflows. Preserve raw data so analysts can review source evidence without relying solely on model summaries.",
+    "tier2": "Enforce human approval for critical actions. Require mandatory human review checkpoints for decisions above defined impact thresholds. Apply sampling rules that force manual review of a percentage of low-priority AI classifications to catch false negatives. Log reviewer actions and override rates. Monitor for signs of rubber-stamping such as near-zero review times or unusually high agreement rates. Trigger escalation when override patterns or missed-detection indicators breach defined thresholds, and feed exceptions into supervisory review.",
+    "tier3": "Conduct periodic exercises that inject known-malicious or high-severity cases misclassified as low priority, and measure whether analysts catch them. Track false negative rates for consequential categories or high-stakes domains. Audit reviewer calibration to confirm humans are adding judgment rather than deferring, and adjust thresholds, UI design, or training based on findings. Feed results into updated triage playbooks and model selection, and integrate automation bias incidents into enterprise risk reporting and lessons-learned sharing with industry peers.",
+    "tooling": "**Categories.** XAI / Responsible AI (explainability & uncertainty); AI Governance\n\n**Explainability & uncertainty surfacing**\n\n- IBM AI Explainability 360 — https://github.com/Trusted-AI/AIX360\n- Microsoft InterpretML — https://github.com/interpretml/interpret\n- Google Learning Interpretability Tool (LIT) — https://github.com/PAIR-code/lit\n- IBM Uncertainty Quantification 360 (confidence display to prompt human verification) — https://github.com/IBM/UQ360",
+    "path": "controls/human-ai-configuration-overreliance/AISECA-HAIC-001.md"
+  },
+  {
+    "id": "AISECA-HAIC-002",
+    "title": "Unsafe agent autonomy",
+    "domain": "Human–AI Configuration & Overreliance",
+    "severity": "High",
+    "mitre_atlas": "Conditional: Privilege Escalation – AI Agent Tool Invocation (AML.T0053); Impact – Data Destruction via AI Agent Tool Invocation (AML.T0101); Impact – Machine Compromise (AML.T0112)",
+    "nist_ai_rmf": [
+      "GOV-2",
+      "MAP-4",
+      "MAN-2"
+    ],
+    "stakeholders": [
+      "Builder / Maintainer"
+    ],
+    "references": [
+      "https://www.giskard.ai/knowledge/a-cursor-ai-agent-wiped-a-production-database-in-9-seconds-excessive-agency-ai-failure"
+    ],
+    "risk": "An AI agent takes actions independently that could create harm because appropriate safeguards or oversight are missing.",
+    "scenario": "A financial services firm deploys an AI coding agent to automate infrastructure changes. The agent, given a task to optimize database performance, autonomously decides to modify production database configurations, drop unused indexes, and reschedule backup jobs — actions far beyond its intended scope. The changes cause a cascading failure during peak trading hours, and because the agent acted without any human checkpoint, the team only discovers the root cause hours later during incident response.",
+    "tier1": "Define clear autonomy boundaries for all AI agents, specifying which actions agents can take independently versus those requiring explicit human approval. Establish a classification system for agent actions based on impact and reversibility (e.g., read-only, low-impact write, high-impact write, irreversible), and map each classification to an appropriate level of human oversight. Require that all agent deployments include a documented scope of permitted autonomous behavior, approved by the responsible business owner, with explicit restrictions on actions that modify production state, access sensitive data, or interact with external systems.",
+    "tier2": "Enforce autonomy boundaries through runtime controls that restrict agent actions to their permitted scope, including configurable approval gates for high-impact or irreversible operations. Implement scoped execution environments that sandbox agent capabilities based on their defined autonomy level. Monitor agent behavior in real time to detect actions that approach or exceed defined boundaries, logging all autonomous decisions with full context including intent, tools invoked, data accessed, and outcome. Trigger alerts and automatic suspension when agents attempt actions outside their permitted scope.",
+    "tier3": "Continuously test autonomy boundaries using adversarial scenarios and red teaming exercises that attempt to coerce agents into exceeding their permitted scope. Track metrics including autonomy boundary violation rate, human override frequency, and time-to-detection for scope exceedances. Regularly review and adapt autonomy boundaries based on operational experience, emerging threat patterns, and changes in business requirements. Validate that approval gates function correctly under load and edge conditions, and refine agent behavior policies based on observed decision patterns and incident post-mortems.",
+    "tooling": "**Categories.** Agentic AI Security / AI Agent Governance; AIDR; CWPP (sandboxing)\n\n**Agent guardrails, sandboxing & human-in-the-loop**\n\n- Meta LlamaFirewall (AlignmentCheck goal-deviation detection) — https://github.com/meta-llama/PurpleLlama\n- Microsoft AutoGen (human-approval & termination controls) — https://github.com/microsoft/autogen\n- NVIDIA NeMo Guardrails (action rails) — https://github.com/NVIDIA/NeMo-Guardrails\n- Google gVisor — https://github.com/google/gvisor\n- AWS Firecracker — https://github.com/firecracker-microvm/firecracker\n- Falco (Sysdig/CNCF) (runtime detection) — https://github.com/falcosecurity/falco",
+    "path": "controls/human-ai-configuration-overreliance/AISECA-HAIC-002.md"
+  },
+  {
+    "id": "AISECA-HAIC-003",
+    "title": "Invisible Agent Decision-Making",
+    "domain": "Human–AI Configuration & Overreliance",
+    "severity": "High",
+    "mitre_atlas": "No Direct Mapping",
+    "nist_ai_rmf": [
+      "GOV-2",
+      "MAP-4",
+      "MAN-2"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [],
+    "risk": "The reasoning behind an AI agent's decisions cannot be easily understood, reviewed, or explained.",
+    "scenario": "An enterprise deploys an AI agent to triage and route IT support tickets. The agent silently deprioritizes tickets from a specific department based on patterns in its training data, causing critical infrastructure issues in that department to go unaddressed for days. When the pattern is finally discovered during an outage post-mortem, there is no audit trail explaining why the agent made those routing decisions, making it impossible to determine root cause or assess the full scope of impact.",
+    "tier1": "Define requirements for agent decision transparency, mandating that all AI agents produce human-readable explanations for their decisions and actions. Require that agent architectures include structured reasoning logs capturing the planning steps, tool selection rationale, and data inputs that informed each decision. Establish minimum logging standards that include the initiating request, the agent's interpreted intent, the reasoning chain, tools considered and selected, data accessed, and the final action taken. Require that all agent deployments include a mechanism for operators to query the agent's reasoning for any past decision.",
+    "tier2": "Capture structured, policy-approved decision records for consequential agent actions, including the initiating request, interpreted objective, authorization context, applicable policy decision, tools invoked, material data sources, approvals obtained, action taken, result, and a concise human-readable rationale. Do not require or retain unrestricted internal model reasoning.",
+    "tier3": "Continuously validate decision transparency by running automated evaluations that compare agent reasoning traces against expected decision patterns and business logic. Deploy anomaly detection to identify decisions where the stated reasoning does not align with the observed action, or where reasoning traces are missing, truncated, or internally contradictory. Conduct periodic human reviews of agent decision logs to assess quality and completeness of reasoning documentation. Track metrics including reasoning trace completeness rate, anomalous decision frequency, and mean time to explain past decisions. Adapt transparency requirements based on findings from incident reviews and regulatory feedback.",
+    "tooling": "**Categories.** AI Observability / LLM Observability (tracing); XAI\n\n**Agent tracing & decision transparency**\n\n- OpenTelemetry GenAI semantic conventions (CNCF; Microsoft/Google-backed) — https://opentelemetry.io/docs/specs/semconv/gen-ai/\n- MLflow Tracing (Databricks) (step-level agent audit) — https://github.com/mlflow/mlflow\n- Meta Captum — https://github.com/pytorch/captum\n- Google Learning Interpretability Tool (LIT) — https://github.com/PAIR-code/lit",
+    "path": "controls/human-ai-configuration-overreliance/AISECA-HAIC-003.md"
+  },
+  {
+    "id": "AISECA-HAIC-004",
+    "title": "Agent continues execution loops beyond intended bounds or stop conditions",
+    "domain": "Human–AI Configuration & Overreliance",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Impact – Cost Harvesting (AML.T0034); Impact – Denial of AI Service (AML.T0029)",
+    "nist_ai_rmf": [
+      "GOV-2",
+      "MAP-4",
+      "MAN-2"
+    ],
+    "stakeholders": [
+      "Builder / Maintainer"
+    ],
+    "references": [],
+    "risk": "An AI agent continues operating after it should have stopped, creating unintended actions or consequences.",
+    "scenario": "A DevOps team configures an AI agent to automatically remediate failing CI/CD pipeline builds. The agent encounters a flaky integration test and enters a retry loop, repeatedly re-triggering the full build pipeline. Over six hours, the agent consumes thousands of compute hours, generates over 200 failed build artifacts, floods the team's notification channels with alerts, and blocks other teams' deployments — all while the original test failure was caused by a transient third-party API outage that resolved itself after twenty minutes.",
+    "tier1": "Define explicit execution limits and stop conditions for all agent workflows, including maximum iteration counts, wall-clock time limits, and output volume thresholds. Require that all agent deployments include configurable circuit breakers that halt execution when predefined limits are reached. Establish policies for retry behavior including maximum retry counts, exponential backoff requirements, and conditions under which the agent must escalate to a human rather than continue retrying. Document stop conditions in the agent's deployment specification, reviewed and approved by the responsible owner.",
+    "tier2": "Enforce runtime constraints on execution loops through platform-level controls that monitor iteration counts, elapsed time, and resource consumption in real time. Implement automated circuit breakers that suspend agent execution when any defined limit is exceeded, with alerts routed to the responsible operator. Monitor for patterns indicative of runaway execution, including rapid repeated tool calls, identical or near-identical outputs across iterations, and escalating resource consumption without progress toward the stated goal. Log all loop iterations with full context to support post-incident analysis.",
+    "tier3": "Continuously test execution limits using simulated failure scenarios and adversarial inputs designed to trigger infinite loops, retry storms, and resource exhaustion. Track metrics including loop termination rate, average iterations before halt, false-positive circuit breaker activations, and time-to-detection for runaway executions. Review and adapt execution limits based on operational data, ensuring thresholds remain appropriate as agent capabilities and workloads evolve. Conduct periodic chaos engineering exercises to validate that circuit breakers and stop conditions function correctly under realistic failure modes.",
+    "tooling": "**Categories.** Agentic AI Security / AI Agent Governance; AIDR\n\n**Execution bounds & termination enforcement**\n\n- Microsoft AutoGen (max-turn/termination conditions) — https://github.com/microsoft/autogen\n- Kubernetes Job deadlines & liveness controls (Google/CNCF) — https://kubernetes.io/docs/concepts/workloads/controllers/job/\n- Cadence (Uber-originated) (workflow timeouts/retries) — https://github.com/uber/cadence\n- Falco (Sysdig/CNCF) (alerts on anomalous long-running activity) — https://github.com/falcosecurity/falco",
+    "path": "controls/human-ai-configuration-overreliance/AISECA-HAIC-004.md"
+  },
+  {
+    "id": "AISECA-HAIC-005",
+    "title": "Unbounded Resource Consumption by Agents",
+    "domain": "Human–AI Configuration & Overreliance",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Impact – Cost Harvesting (AML.T0034); Impact – Denial of AI Service (AML.T0029)",
+    "nist_ai_rmf": [
+      "GOV-2",
+      "MAP-4",
+      "MAN-2"
+    ],
+    "stakeholders": [
+      "Builder / Maintainer"
+    ],
+    "references": [
+      "https://cordum.io/blog/agent-finops-token-cost-governance"
+    ],
+    "risk": "An AI agent consumes excessive time, money, data, or computing resources while pursuing a task.",
+    "scenario": "A marketing team deploys an AI agent to generate personalized campaign content at scale. The agent, given a broad directive to optimize engagement across all customer segments, begins spawning parallel sub-tasks for each segment, each making multiple LLM inference calls and retrieving data from several APIs. Within hours, the agent has made over 50,000 API calls, consumed $12,000 in cloud compute costs, and triggered rate-limiting across shared downstream services — degrading performance for other production systems on the same infrastructure.",
+    "tier1": "Define resource limits for agent execution across all relevant dimensions including compute time, API call volume, token consumption, memory usage, execution duration, and monetary cost. Establish per-agent and per-workflow resource budgets that are proportional to the task's expected scope and business value. Require that all agent deployments include resource quotas configured at the platform level, with cost thresholds that trigger automatic suspension. Define policies for resource allocation across multi-agent systems to prevent any single agent from monopolizing shared infrastructure.",
+    "tier2": "Enforce resource quotas through platform-level controls that track and limit compute, API calls, token usage, and cost in real time. Implement metering infrastructure that attributes resource consumption to specific agents, workflows, and initiating users. Deploy automated throttling and suspension mechanisms that activate when agents approach or exceed defined resource thresholds. Monitor for anomalous consumption patterns including sudden spikes, sustained high-rate API calls, and resource usage that deviates significantly from historical baselines. Alert responsible operators when consumption patterns suggest unbounded execution.",
+    "tier3": "Continuously validate resource controls by simulating high-load and adversarial scenarios designed to test quota enforcement and throttling mechanisms. Track metrics including cost per agent execution, resource utilization efficiency, quota breach frequency, and time-to-throttle. Review and adapt resource thresholds based on evolving usage patterns, infrastructure capacity, and cost optimization goals. Conduct periodic audits of resource attribution to ensure accurate metering and chargeback, and update resource policies as agent capabilities scale and new tool integrations are added.",
+    "tooling": "**Categories.** FinOps; Agentic AI Governance (budget/quota controls); API Security (rate limiting)\n\n**Quota, budget & rate enforcement**\n\n- Kubernetes ResourceQuota/LimitRange (Google/CNCF) — https://kubernetes.io/docs/concepts/policy/resource-quotas/\n- Envoy (Lyft-originated/CNCF) (rate limiting on tool/API calls) — https://github.com/envoyproxy/envoy\n- KEDA (Microsoft-originated/CNCF) (scaling caps) — https://github.com/kedacore/keda\n- OpenTelemetry (CNCF) — https://opentelemetry.io\n- Datadog Agent (open source) (consumption telemetry) — https://github.com/DataDog/datadog-agent",
+    "path": "controls/human-ai-configuration-overreliance/AISECA-HAIC-005.md"
+  },
+  {
+    "id": "AISECA-HAIC-006",
+    "title": "Uncontrolled Agent Delegation Chains",
+    "domain": "Human–AI Configuration & Overreliance",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Privilege Escalation – AI Agent Tool Invocation (AML.T0053); Lateral Movement – Use Alternate Authentication Material (AML.T0091); Collection – Data from AI Services (AML.T0085)",
+    "nist_ai_rmf": [
+      "GOV-2",
+      "MAP-4",
+      "MAN-2"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://cloudsecurityalliance.org/blog/2026/03/25/control-the-chain-secure-the-system-fixing-ai-agent-delegation"
+    ],
+    "risk": "An AI agent delegates tasks to other agents or systems in ways that become difficult to control or oversee.",
+    "scenario": "An enterprise deploys a multi-agent system where a Manager Agent delegates tasks to specialized sub-agents. A user asks the Manager Agent to compile a quarterly business review. The Manager Agent delegates data gathering to an Analytics Agent, which delegates sub-queries to a Database Agent, which delegates specific computations to a Code Execution Agent. The Code Execution Agent, now four levels deep in the delegation chain, executes a query that accesses sensitive HR compensation data — data the original user was never authorized to see. No single agent in the chain validated whether the delegation was appropriate, and the initiating user's access permissions were never propagated through the chain.",
+    "tier1": "Define explicit limits on agent delegation depth and breadth, restricting the number of levels an agent-to-agent delegation chain can reach and the total number of agents that can be invoked in a single workflow. Require that all delegation events include propagation of the initiating user's identity and authorization context, ensuring that no delegated agent can exceed the permissions of the original requestor. Establish an approved registry of agent-to-agent delegation paths, specifying which agents are permitted to delegate to which other agents and under what conditions.",
+    "tier2": "Enforce delegation controls through runtime mechanisms that validate each delegation event against the approved registry, checking delegation depth, target agent authorization, and propagation of the initiating identity. Implement delegation chain tracking that maintains a complete record of the full chain from initiating user through every delegated agent, with each link recording the delegating agent, the delegated agent, the task description, and the permissions passed. Monitor for delegation anomalies including excessive chain depth, circular delegation, delegation to unregistered agents, and permission escalation across delegation boundaries. Trigger alerts and automatic chain termination when violations are detected.",
+    "tier3": "Continuously test delegation boundaries using adversarial scenarios designed to exploit multi-agent delegation, including attempts to bypass permission propagation, create circular delegation loops, and escalate privileges through deep chains. Track metrics including average and maximum delegation depth, delegation chain failure rate, permission escalation incidents, and circular delegation detections. Review and adapt delegation policies based on operational experience, emerging multi-agent attack patterns, and changes to the agent registry. Conduct periodic audits of delegation logs to verify that identity and authorization context is consistently preserved across all delegation events.",
+    "tooling": "**Categories.** Agentic AI Security; NHI / Machine IAM; AI Observability (distributed tracing)\n\n**Delegation control & cross-agent tracing**\n\n- Google Agent2Agent (A2A) protocol (authenticated, auditable agent-to-agent exchange) — https://github.com/a2aproject/A2A\n- Cisco AI Defense A2A Scanner — https://github.com/cisco-ai-defense\n- OpenTelemetry (CNCF) (distributed tracing across agent hops) — https://opentelemetry.io\n- AWS Cedar (policies limiting delegable scopes) — https://github.com/cedar-policy/cedar",
+    "path": "controls/human-ai-configuration-overreliance/AISECA-HAIC-006.md"
+  },
+  {
+    "id": "AISECA-HAIC-007",
+    "title": "Delegation without accountability",
+    "domain": "Human–AI Configuration & Overreliance",
+    "severity": "Medium",
+    "mitre_atlas": "No Direct Mapping",
+    "nist_ai_rmf": [
+      "GOV-2",
+      "MAP-4",
+      "MAN-2"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [
+      "https://www.nytimes.com/2023/05/27/nyregion/chatgpt-lawyers.html"
+    ],
+    "risk": "Tasks are delegated between agents without clear ownership, responsibility, or accountability for outcomes.",
+    "scenario": "Work is handed to AI, but no one is clearly responsible for checking it or owning the results. When mistakes happen, they slip through or no one takes responsibility.",
+    "tier1": "Define ownership within formal processes that use AI, specifying who is responsible for reviewing, approving, and acting on outputs at each stage. Define where human oversight is required and how accountability is assigned across workflows.",
+    "tier2": "Enforce accountability by embedding ownership and review requirements into workflows, ensuring AI outputs are validated by the appropriate roles before action is taken. Record decisions and actions to maintain clear traceability of responsibility.",
+    "tier3": "Continuously audit AI-assisted workflows to confirm ownership assignments are current and review checkpoints are being observed. Test accountability controls by introducing deliberate errors into AI outputs and measuring whether assigned owners catch and escalate them. Track metrics such as review completion rate and time-to-detect for AI-driven mistakes, and update ownership assignments as workflows and organizational roles evolve.",
+    "tooling": "**Categories.** NHI / Machine IAM; IGA (accountability); AI Observability\n\n**Ownership & audit attribution**\n\n- Keycloak (Red Hat) (OAuth 2.0 Token Exchange for on-behalf-of identity) — https://github.com/keycloak/keycloak\n- SPIFFE/SPIRE (CNCF; HPE-backed) (workload identity per agent) — https://github.com/spiffe/spire\n- OpenTelemetry (CNCF) (trace-context propagation) — https://opentelemetry.io\n- MLflow Tracing (Databricks) (task-level audit) — https://github.com/mlflow/mlflow",
+    "path": "controls/human-ai-configuration-overreliance/AISECA-HAIC-007.md"
+  },
+  {
+    "id": "AISECA-INTG-001",
+    "title": "Misinformation propagation",
+    "domain": "Information Integrity",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Resource Development – Publish Hallucinated Entities (AML.T0060); Impact – External Harms (AML.T0048)",
+    "nist_ai_rmf": [
+      "MAP-3",
+      "MEA-1",
+      "MAN-2"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [],
+    "risk": "AI creates, amplifies, or spreads false, misleading, or deceptive information.",
+    "scenario": "An asset manager deploys an internal AI assistant to help analysts draft market commentary and client-facing communications. An analyst asks the model to summarize recent regulatory guidance on capital reserve requirements. The model, lacking grounding to authoritative regulatory sources and last updated over a year ago, generates a plausible but inaccurate summary that mischaracterizes a pending rule's implementation timeline and applicability thresholds. Under deadline pressure, the analyst publishes the commentary to an institutional client distribution list without independent verification. Clients make portfolio adjustments based on the incorrect regulatory summary, resulting in compliance exposure and client relationship damage when the error is discovered.",
+    "tier1": "Define information integrity requirements for AI systems used to generate factual claims, regulatory guidance, market commentary, or other content where accuracy directly affects business or client outcomes, requiring that outputs in these categories be grounded to authoritative and verifiable sources. Establish a taxonomy of high-stakes content categories where AI-generated content must be explicitly labeled as AI-assisted and subject to human verification before publication or external distribution, and prohibit AI systems from asserting factual certainty on topics outside their verified knowledge scope. Require that all AI deployments in information-sensitive contexts include documented grounding requirements, context on when model was last trained, approved source allowlists, and mandatory disclosure language reviewed by the responsible Legal and Compliance function.",
+    "tier2": "Enforce information integrity controls through retrieval-augmented generation architectures that ground factual outputs to approved source corpora — including regulatory databases, official filings, and internal knowledge repositories — and through output monitoring that flags claims lacking traceable grounding citations. Implement confidence scoring and uncertainty disclosure mechanisms that surface low-confidence assertions before outputs are presented to users, and require that outputs exceeding defined uncertainty thresholds trigger human review workflows before distribution. Monitor for misinformation propagation patterns including outputs that contradict known-authoritative sources and outputs that assert specificity not supported by available grounding evidence.",
+    "tier3": "Continuously test information integrity controls using adversarial and out-of-distribution queries that probe for confident misinformation generation, including questions about recent regulatory changes, novel market events, and topics at the boundaries of the model's verified knowledge. Track metrics including grounding citation rate, factual accuracy rate on hold-out evaluation sets, human correction rate in review workflows, and downstream error rate for AI-assisted content that reaches distribution. Conduct periodic red team exercises targeting information integrity, including scenarios where source corpora are stale or incomplete, and adapt grounding architectures, confidence calibration, and human review thresholds based on observed failure patterns.",
+    "tooling": "**Categories.** Disinformation Security (provenance & watermarking); AI Guardrails\n\n**Content provenance & watermarking**\n\n- Google SynthID Text — https://github.com/google-deepmind/synthid-text\n- c2patool / C2PA (Adobe-led, with Microsoft/Google/Intel) (content credentials) — https://github.com/contentauth/c2patool\n- Meta Llama Guard 3 (output moderation) — https://github.com/meta-llama/PurpleLlama\n- NVIDIA NeMo Guardrails (fact-check rails) — https://github.com/NVIDIA/NeMo-Guardrails",
+    "path": "controls/information-integrity/AISECA-INTG-001.md"
+  },
+  {
+    "id": "AISECA-INTG-002",
+    "title": "Output manipulation",
+    "domain": "Information Integrity",
+    "severity": "Medium",
+    "mitre_atlas": "Direct: Execution – LLM Prompt Injection (AML.T0051); Persistence – RAG Poisoning (AML.T0070); Persistence – AI Agent Context Poisoning (AML.T0080); Defense Evasion – False RAG Entry Injection (AML.T0071); Impact – Erode AI Model Integrity (AML.T0031)",
+    "nist_ai_rmf": [
+      "MAP-3",
+      "MEA-1",
+      "MAN-2"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://arxiv.org/abs/2302.12173"
+    ],
+    "risk": "An attacker, user, or external influence alters AI outputs to achieve unintended or harmful outcomes.",
+    "scenario": "An attacker injects malicious or biased data into a retrieval source or prompt context, causing the AI system to generate manipulated outputs that mislead users or influence decision-making.",
+    "tier1": "Define trust boundaries for input sources and model context, restricting the model from treating unverified or external content as authoritative without validation, and establishing guidelines for safe handling of dynamic or user-supplied inputs.",
+    "tier2": "Implement controls such as input validation, source attribution, and integrity checks for retrieved or injected content. Monitor for signs of prompt injection, data poisoning, or anomalous context manipulation, and enforce safe-response patterns or isolation when integrity cannot be assured.",
+    "tier3": "Continuously test resilience against output manipulation using adversarial scenarios (e.g., prompt injection, poisoned retrieval corpora). Track metrics such as manipulation success rate and detection coverage, and refine trust frameworks, validation mechanisms, and monitoring based on evolving attack techniques.",
+    "tooling": "**Categories.** AI Guardrails / AI Firewall; AIDR; SSCS (artifact signing)\n\n**Output integrity & manipulation defense**\n\n- Palo Alto Networks LLM Guard (Protect AI) (output scanners) — https://github.com/protectai/llm-guard\n- Meta LlamaFirewall — https://github.com/meta-llama/PurpleLlama\n- NVIDIA NeMo Guardrails (output rails) — https://github.com/NVIDIA/NeMo-Guardrails\n- Sigstore cosign (OpenSSF) (signing of published artifacts) — https://github.com/sigstore/cosign\nAdversarial testing:\n- Microsoft PyRIT — https://github.com/Azure/PyRIT",
+    "path": "controls/information-integrity/AISECA-INTG-002.md"
+  },
+  {
+    "id": "AISECA-INTG-003",
+    "title": "Lack of provenance",
+    "domain": "Information Integrity",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Resource Development – Publish Poisoned Models (AML.T0058); Resource Development – Publish Poisoned Datasets (AML.T0019); Resource Development – Publish Poisoned AI Agent Tool (AML.T0104); Initial Access – AI Supply Chain Compromise (AML.T0010)",
+    "nist_ai_rmf": [
+      "MAP-3",
+      "MEA-1",
+      "MAN-2"
+    ],
+    "stakeholders": [
+      "Builder / Maintainer"
+    ],
+    "references": [
+      "https://jnm.snmjournals.org/content/early/2025/11/06/jnumed.125.270653"
+    ],
+    "risk": "The origin, history, or source of information, decisions, or actions cannot be verified.",
+    "scenario": "A Generative AI tool used to support diagnostic analysis of medical images introduces phantom anomalies, such as a fracture-like line in an unbroken bone or a lesion in healthy tissue. This could directly impact health outcomes.",
+    "tier1": "Define provenance requirements as a formal standard for all data entering AI systems, specifying that every dataset must have a documented origin, collection method, ownership status, and chain of custody before it is eligible for use in training, fine-tuning, or retrieval pipelines. Constrain the system by prohibiting the use of any data whose provenance cannot be verified, requiring all data sources to be registered in a governed catalog with lineage metadata, and mandating that third-party and vendor-supplied datasets include provenance documentation as a contractual condition of use.",
+    "tier2": "Enforce provenance controls by implementing automated pipeline checks that validate lineage metadata at every data ingestion point, blocking datasets that lack verified origin records from entering AI workflows, and applying cryptographic hashing or digital watermarking to track data integrity from source through to model training. Monitor by maintaining a live data lineage graph that traces the journey of every dataset across ingestion, transformation, and training stages, alerting on any gaps, modifications, or unregistered data sources that appear in the pipeline.",
+    "tier3": "Validate by conducting regular lineage audits that reconcile what data was intended to be used against what was actually ingested, probing deployed models for outputs that suggest untraceable or suspect training sources, and cross-referencing provenance records against known high-risk datasets such as those with disputed rights or unverified collection practices. Adapt by updating provenance requirements as new data sources and AI pipeline patterns emerge, aligning standards with evolving regulatory obligations such as the EU AI Act's transparency and documentation requirements, and embedding provenance review into post-incident analysis so that each gap identified strengthens future controls.",
+    "tooling": "**Categories.** SSCS (signing, attestation, SBOM); Disinformation Security (content credentials); AI-SPM\n\n**Provenance, signing & attestation**\n\n- Sigstore cosign (OpenSSF) — https://github.com/sigstore/cosign\n- OpenSSF model-signing (Google/NVIDIA-backed) — https://github.com/sigstore/model-transparency\n- c2patool / C2PA (Adobe-led, with Microsoft/Google/Intel) — https://github.com/contentauth/c2patool\n- GUAC (Google/OpenSSF) (supply-chain knowledge graph) — https://github.com/guacsec/guac\n- SLSA provenance framework (Google/OpenSSF) — https://slsa.dev\n- Cisco AI Defense Model Provenance Kit — https://github.com/cisco-ai-defense/model-provenance-kit",
+    "path": "controls/information-integrity/AISECA-INTG-003.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-001",
+    "title": "Loss of identity attribution",
+    "domain": "Information Security",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Defense Evasion – Impersonation (AML.T0073); Defense Evasion – Masquerading (AML.T0074); Initial Access – Valid Accounts (AML.T0012)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [],
+    "risk": "The identity responsible for an action, decision, or output can no longer be reliably determined.",
+    "scenario": "An organization deploys multiple AI agents built on a shared orchestration platform to handle customer intake, billing, and records retrieval. All three agents execute under a single shared service account. When an auditor investigates an unauthorized access to restricted patient records, logs show only the shared account — making it impossible to determine which agent, workflow, or upstream user trigger was responsible for the behavior.",
+    "tier1": "Identify or define data classifications that require traceable identity access during operations or workflows. Define ownership, naming, and lifecycle standards for non-human identities. Publish identity and access policy requiring distinct agentic identities in these areas and prohibit the use of shared or generic service accounts. Provision unique identities (e.g. machine identities, individual service accounts) scoped to specific data classifications or operations.",
+    "tier2": "Require AI actions, tool call, and data accesses be logged with agent identity, invoking user, session, and workflow context. Reject requests missing attribution information. Monitor for shared-credential use, prohibited accesses, and other anomolous patterns per agent. Trigger escalation when agents act outside their scoped permissions or when attribution gaps appear in logs.",
+    "tier3": "Audit sample transactions end-to-end. Conduct exercises to identify gaps in enforcement mechanisms. Review non-human identity inventories for orphaned, over-privileged, or unattributed accounts. Integrate lessons learned into IR playbooks, enterprise risk reporting, and readiness assessments.",
+    "tooling": "**Categories.** NHI / Machine IAM; ITDR; SIEM (audit logging)\n\n**Workload identity & audit logging**\n\n- SPIFFE/SPIRE (CNCF; HPE-backed) (per-agent cryptographic identities) — https://github.com/spiffe/spire\n- Keycloak (Red Hat) (authentication & audit events) — https://github.com/keycloak/keycloak\n- OpenTelemetry (CNCF) (actor/trace attribution) — https://opentelemetry.io\n- OpenSearch (AWS) (audit-log pipelines) — https://opensearch.org",
+    "path": "controls/information-security/AISECA-INFOSEC-001.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-002",
+    "title": "Compromised AI credentials",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "Direct: Credential Access – Unsecured Credentials (AML.T0055); Credential Access – Credentials from AI Agent Configuration (AML.T0083); Credential Access – AI Agent Tool Credential Harvesting (AML.T0098); Initial Access – Valid Accounts (AML.T0012)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://arxiv.org/abs/2509.10540"
+    ],
+    "risk": "Accounts, passwords, API keys, tokens, or credentials used by AI systems are stolen, exposed, or misused.",
+    "scenario": "Someone steals the login or API key for an AI system and uses it to access data or run the system as if they were authorized. This can lead to data leaks, abuse, or unexpected costs.",
+    "tier1": "Define how AI systems and tools are accessed securely, including clear rules for managing API keys, service accounts, and user credentials. Define who owns these credentials, who is allowed to use them, and ensure access is limited to only what is necessary (least-privilege principle).",
+    "tier2": "Enforce secure access by protecting credentials (e.g., using a secrets manager), limiting permissions to only what is needed, and requiring authentication controls such as key rotation and, where appropriate, multi-factor authentication. Monitor and log all access and usage to detect unauthorized activity.",
+    "tier3": "Continuously adapt by monitoring for unusual usage patterns that may indicate compromised credentials, rotating and revoking credentials when risks are identified, and periodically reviewing access controls and permissions. Prevent credentials from being placed into the model's context by instead using interception for credentials when an authenticated tool or MCP is used (i.e. AWS AgentCore Gateway)",
+    "tooling": "**Categories.** PAM / Secrets Management; NHI; secret scanning (DevSecOps/AST)\n\n**Secrets management & leak detection**\n\n- CyberArk Conjur (open source secrets management) — https://github.com/cyberark/conjur\n- SPIFFE/SPIRE (CNCF; HPE-backed) (short-lived credentials replacing static keys) — https://github.com/spiffe/spire\n- AWS git-secrets (pre-commit scanning) — https://github.com/awslabs/git-secrets\n- Yelp detect-secrets — https://github.com/Yelp/detect-secrets\n- Palo Alto Networks LLM Guard (Protect AI) (secrets scanner on prompts/outputs) — https://github.com/protectai/llm-guard",
+    "path": "controls/information-security/AISECA-INFOSEC-002.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-003",
+    "title": "Over-privileged AI identities",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "Conditional: Privilege Escalation – Valid Accounts (AML.T0012); Privilege Escalation – AI Agent Tool Invocation (AML.T0053); Collection – Data from AI Services (AML.T0085); Exfiltration – Exfiltration via AI Agent Tool Invocation (AML.T0086)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [],
+    "risk": "An AI system has more permissions or access than it requires to perform its intended function.",
+    "scenario": "A financial institution provisions an AI coding assistant for its software engineering teams, assigning it a service account with read access to the entire internal code repository and write access to development and staging environments to support automated testing workflows. The permissions are configured broadly for convenience and never scoped down as the assistant is rolled out to additional teams. An attacker exploits a prompt injection vulnerability in a developer's workflow to coerce the assistant into exfiltrating large volumes of IP source code, such as proprietary trading logic and internal API credentials embedded in configuration files, using the assistant's legitimate, over-privileged service account. The exfiltration goes undetected for weeks because the access pattern is indistinguishable from the assistant's normal, unrestricted behavior.",
+    "tier1": "Define least-privilege requirements for all AI system identities — including service accounts, API credentials, agent identities, and integration tokens — specifying that each AI deployment is provisioned with only the permissions required to perform its defined functions, with no standing access to data or systems outside its operational scope. Require that all AI identity provisioning requests include a documented justification mapping each requested permission to a specific functional requirement, reviewed and approved by the responsible security and system ownership functions. Establish a privilege tier classification for AI identities that reflects the sensitivity of accessible data, the reversibility of permitted actions, and the breadth of system access, with escalating oversight and review requirements for higher-privilege tiers.",
+    "tier2": "Enforce least-privilege controls through automated provisioning workflows that apply scoped permission sets to AI identities based on approved role definitions, and through periodic access reviews that validate provisioned permissions remain aligned with current functional requirements. Implement runtime monitoring of AI identity activity that detects access patterns inconsistent with defined operational scope, including access to data categories not required by the AI's function, unusual query volumes, and access to systems outside the AI's registered integration set. Alert and automatically suspend AI identities exhibiting anomalous access behavior, and require re-authorization for any permission expansion beyond the approved baseline.",
+    "tier3": "Continuously validate AI identity permission boundaries by running automated access review tests that check provisioned permissions against current functional scope definitions, and by conducting adversarial exercises that attempt to exploit over-privileged identities through prompt injection, context manipulation, and tool misuse. Track metrics including over-provisioning rate at initial deployment, permission drift rate over time, anomalous access detection rate, and mean time to detect and contain unauthorized access via AI identity. Conduct periodic red team exercises simulating attacker exploitation of AI service accounts, and adapt provisioning controls, monitoring thresholds, and access review cadences based on findings and emerging attack patterns.",
+    "tooling": "**Categories.** CIEM; IGA; NHI (least privilege)\n\n**Least-privilege analysis & right-sizing**\n\n- Netflix Repokid (auto-removal of unused IAM permissions) — https://github.com/Netflix/repokid\n- Netflix ConsoleMe — https://github.com/Netflix/consoleme\n- Salesforce Policy Sentry (least-privilege policy authoring) — https://github.com/salesforce/policy_sentry\n- Salesforce Cloudsplaining (IAM risk assessment) — https://github.com/salesforce/cloudsplaining\n- AWS Cedar (fine-grained authorization) — https://github.com/cedar-policy/cedar",
+    "path": "controls/information-security/AISECA-INFOSEC-003.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-004",
+    "title": "Agent action exceeds authority delegated by initiating identity",
+    "domain": "Information Security",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Privilege Escalation – AI Agent Tool Invocation (AML.T0053); Lateral Movement – Use Alternate Authentication Material (AML.T0091); Collection – Data from AI Services (AML.T0085)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://aembit.io/blog/5-security-considerations-for-managing-ai-agents-and-their-identities/"
+    ],
+    "risk": "An AI agent performs actions beyond the authority granted by the person or system that initiated the task.",
+    "scenario": "A junior analyst uses an AI agent to research market trends. The agent, configured with broad tool access for flexibility, interprets the analyst's request as requiring competitive intelligence and proceeds to access a restricted M&A pipeline database using its own service account credentials — credentials that carry far more privilege than the analyst's role permits. The agent retrieves confidential deal information and includes it in its summary response. The analyst, unaware the data was restricted, shares the summary in a team meeting, inadvertently exposing material non-public information to unauthorized personnel.",
+    "tier1": "Define agent permissions that are explicitly aligned to the initiating user's identity and authorization level, ensuring that agents cannot perform actions the requesting user is not authorized to perform directly. Implement a delegation model where the agent inherits the user's entitlements rather than operating under its own privileged service identity. Require that all agent-to-tool interactions include the initiating user's identity context, enabling downstream systems to enforce access controls based on the original requestor. Establish policies that prevent agents from using elevated service account credentials to bypass user-level access restrictions.",
+    "tier2": "Enforce identity-based access controls that propagate the initiating user's identity and permissions through every agent action, tool invocation, and data access operation. Implement runtime authorization checks at each tool boundary that validate the initiating user's entitlements before allowing the agent to proceed. Monitor agent actions against the permitted scope of the initiating identity, detecting and blocking any attempts to access resources or perform operations that exceed the user's authorization level. Log all agent actions with full identity context including the initiating user, the delegated permissions, and the specific resources accessed.",
+    "tier3": "Continuously validate authorization boundaries by running automated test suites that attempt to trigger privilege escalation through agent workflows, including scenarios where agents attempt to access resources beyond the initiating user's scope. Track metrics including authorization violation rate, privilege escalation attempts, and coverage of identity propagation across tool integrations. Conduct periodic access reviews to ensure agent permission models remain aligned with user role definitions and organizational access policies. Adapt controls based on findings from incident reviews, access audits, and emerging attack patterns targeting identity delegation in agentic systems.",
+    "tooling": "**Categories.** Externalized Authorization (policy-as-code); Agentic AI Security; AIDR\n\n**Scoped delegation & policy enforcement**\n\n- Keycloak (Red Hat) (OAuth 2.0 Token Exchange with narrowed scopes) — https://github.com/keycloak/keycloak\n- AWS Cedar (per-action authorization on agent tool calls) — https://github.com/cedar-policy/cedar\n- Meta LlamaFirewall (AlignmentCheck for authority/goal deviation) — https://github.com/meta-llama/PurpleLlama\n- Falco (Sysdig/CNCF) (runtime detection of out-of-scope actions) — https://github.com/falcosecurity/falco",
+    "path": "controls/information-security/AISECA-INFOSEC-004.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-005",
+    "title": "Cross-Agent Impersonation",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "Direct: Defense Evasion – Impersonation (AML.T0073); Defense Evasion – Masquerading (AML.T0074); Initial Access – Valid Accounts (AML.T0012); Lateral Movement – Use Alternate Authentication Material (AML.T0091)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://securityboulevard.com/2026/02/the-ai-agent-identity-crisis-80-of-agents-dont-properly-identify-themselves-80-of-sites-dont-verify/"
+    ],
+    "risk": "One AI agent pretends to be another trusted agent in order to gain access, influence decisions, or perform unauthorized actions.",
+    "scenario": "In a multi-agent customer service platform, a compromised Feedback Agent (designed only to collect satisfaction surveys) begins sending requests to the Account Management Agent while impersonating the Billing Agent's identity. The Account Management Agent, trusting the Billing Agent identity, processes requests to issue refunds and apply account credits. The attack goes undetected for weeks because inter-agent authentication relied on a shared API key rather than per-agent cryptographic identity verification, and the Account Management Agent had no mechanism to validate that the requesting agent was genuinely the Billing Agent.",
+    "tier1": "Define strong agent identity boundaries by requiring that every AI agent in the system has a unique, cryptographically verifiable identity that is distinct from all other agents and human users. Establish policies that prevent any agent from assuming, spoofing, or inheriting another agent's identity. Require mutual authentication for all agent-to-agent interactions, ensuring that each agent can verify the identity of any agent it communicates with. Define an agent identity registry that maintains the authoritative mapping between agent identities and their permitted capabilities and communication partners.",
+    "tier2": "Enforce authentication between agents using cryptographic identity verification for all inter-agent communications. Implement runtime identity validation that verifies the claiming agent's identity against the agent registry before processing any inter-agent request. Monitor inter-agent interactions for identity anomalies, including requests from agents claiming identities that do not match their registered credentials, unexpected communication patterns between agents, and agents attempting to access capabilities outside their registered scope. Log all inter-agent interactions with verified identity information to maintain a complete audit trail.",
+    "tier3": "Continuously test for impersonation risks using red teaming exercises and automated penetration tests that attempt to spoof agent identities, replay credentials, and exploit weak authentication mechanisms in inter-agent communication channels. Track metrics including impersonation attempt frequency, authentication failure rates, and time-to-detection for identity anomalies. Review and adapt identity controls based on observed attack patterns, evolving multi-agent architectures, and changes to the agent registry. Conduct periodic audits of agent identity configurations to verify that all agents maintain unique, non-shared credentials and that mutual authentication is consistently enforced.",
+    "tooling": "**Categories.** NHI / Machine IAM (workload identity, mTLS); ITDR; Agentic AI Security\n\n**Mutual agent authentication**\n\n- SPIFFE/SPIRE (CNCF; HPE-backed) (mTLS SVID identities per agent) — https://github.com/spiffe/spire\n- Google Agent2Agent (A2A) protocol (authenticated agent cards) — https://github.com/a2aproject/A2A\n- Cisco AI Defense A2A Scanner (inter-agent trust issues) — https://github.com/cisco-ai-defense\n- Keycloak (Red Hat) (client authentication) — https://github.com/keycloak/keycloak",
+    "path": "controls/information-security/AISECA-INFOSEC-005.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-006",
+    "title": "Untrusted MCP servers or tools gaining implicit trust",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "Direct: Resource Development – Publish Poisoned AI Agent Tool (AML.T0104); Initial Access – AI Supply Chain Compromise (AML.T0010); Execution – User Execution (AML.T0011); Persistence – AI Agent Tool Poisoning (AML.T0110)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://arxiv.org/abs/2308.03825"
+    ],
+    "risk": "An untrusted MCP server or tool is treated as trustworthy and gains inappropriate influence over AI behavior.",
+    "scenario": "An AI agent integrates with an external MCP server or tool that appears legitimate but is malicious, resulting in the model retrieving or executing untrusted instructions that expose sensitive data or perform unauthorized actions.",
+    "tier1": "Define and enforce trust policies for external tools and MCP servers, including explicit allowlisting, authentication requirements, and restrictions on what data and actions can be shared or executed with third-party integrations.",
+    "tier2": "Implement secure integration controls such as strong authentication, scoped permissions, sandboxing, and runtime validation of tool responses. Monitor tool usage for anomalous behavior, unexpected data access, or unauthorized actions, and trigger containment or revocation when trust violations occur.",
+    "tier3": "Continuously assess third-party tool trustworthiness through security testing, adversarial simulations, and ongoing monitoring of integration behavior. Track metrics such as unauthorized access attempts, anomalous tool activity, and policy violations, and adapt trust policies, access controls, and integration patterns as risks evolve.\n\nNote: For expanded coverage of tool registry poisoning, schema injection, and compromised MCP data providers — including multi-scenario treatment and detailed tiered controls — see \"Compromised, Untrusted, or Malicious Agent Tool Ecosystem\" under Value Chain & Component Integration.",
+    "tooling": "**Categories.** AI-SPM / AI Supply Chain Security (MCP vetting); AI TRiSM\n\n**MCP server vetting & registry trust**\n\n- Cisco AI Defense MCP Scanner (YARA + LLM + behavioral code analysis) — https://github.com/cisco-ai-defense/mcp-scanner\n- Snyk MCP-Scan (Invariant Labs) (tool pinning / rug-pull detection) — https://github.com/invariantlabs-ai/mcp-scan\n- Snyk Agent Scan (discovers & scans installed MCP configs) — https://github.com/snyk/agent-scan\n- Anthropic MCP Inspector (manual review) — https://github.com/modelcontextprotocol/inspector",
+    "path": "controls/information-security/AISECA-INFOSEC-006.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-007",
+    "title": "Prompt & instruction manipulation",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "Direct: Execution – LLM Prompt Injection (AML.T0051); Defense Evasion – LLM Jailbreak (AML.T0054); Persistence – AI Agent Context Poisoning (AML.T0080); Persistence – RAG Poisoning (AML.T0070)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://venturebeat.com/security/openai-admits-that-prompt-injection-is-here-to-stay"
+    ],
+    "risk": "An attacker manipulates prompts or instructions to bypass controls or alter intended AI behavior.",
+    "scenario": "Someone emails you a PDF you want summarized. The PDF has hidden white on white text with instructions you can't see. Those instructions guide your AI tool to leverage your Gmail MCP to deliver  the full contents of your chat conversation to a threat actor.",
+    "tier1": "Define system vs. user instruction boundaries by formally documenting which prompt structures, instruction types, and user roles are permitted, and establishing a threat model that covers known manipulation vectors such as prompt injection, jailbreaking, role-play exploits, and indirect instruction override via retrieved or external content. Constrain the system by enforcing strict separation between system-level instructions and user-supplied input, limiting the model's ability to act on instructions embedded in untrusted content, restricting output modalities and tool access to only what the intended use case requires, and requiring all system prompts to be reviewed and approved before deployment.",
+    "tier2": "Enforce separation by deploying prompt filtering layers that detect and block known manipulation patterns and implementing output guardrails that prevent the model from producing responses that violate defined behavioral boundaries regardless of how the prompt is constructed. Monitor manipulation by logging all inputs, instructions, and outputs with sufficient context to reconstruct interaction chains, configuring anomaly detection to flag unusual prompt structures, repeated boundary-probing attempts, or outputs that deviate significantly from expected behavior, and establishing clear escalation paths for suspected manipulation events.",
+    "tier3": "Continuously test defenses through regular adversarial red-teaming that systematically attempts prompt injection, instruction hijacking, and jailbreak techniques against deployed systems, using findings to assess whether defined constraints are holding under real-world attack conditions and whether monitoring controls are detecting manipulation attempts with sufficient accuracy. Adapt defenses by updating prompt filtering rules, system prompt structures, and output guardrails in response to newly discovered attack techniques, aligning controls with emerging regulatory guidance on AI robustness, and feeding red-team and incident findings into a continuous improvement cycle so that defenses evolve alongside the manipulation threat landscape.",
+    "tooling": "**Categories.** AI Guardrails / AI Firewall; AIDR; AI Red Teaming (AEV)\n\n**Prompt injection / jailbreak defense**\n\n- Meta Prompt Guard 2 — https://github.com/meta-llama/PurpleLlama\n- IBM Granite Guardian (jailbreak detector) — https://github.com/ibm-granite/granite-guardian\n- NVIDIA NeMo Guardrails (input rails) — https://github.com/NVIDIA/NeMo-Guardrails\n- Palo Alto Networks LLM Guard (Protect AI) — https://github.com/protectai/llm-guard\nTesting:\n- Microsoft PyRIT — https://github.com/Azure/PyRIT\n- NVIDIA garak — https://github.com/NVIDIA/garak",
+    "path": "controls/information-security/AISECA-INFOSEC-007.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-008",
+    "title": "Model extraction or abuse",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "Direct: AI Model Access – AI Model Inference API Access (AML.T0040); Exfiltration – Exfiltration via AI Inference API (AML.T0024); Impact – External Harms (AML.T0048)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [],
+    "risk": "An AI model is copied, stolen, abused, or used in ways not authorized by its owner.",
+    "scenario": "A competitor makes carefully crafted queries to a company's customer-facing AI agent, systematically mapping its responses to reconstruct proprietary fine-tuning data and replicate the model's specialized behavior.",
+    "tier1": "Publish a policy defining which models, fine-tuned capabilities, and training datasets are considered intellectual property, and restrict external-facing deployments of highly specialized or sensitive models. Require authentication for model access and prohibit anonymous or unbounded querying. Configure rate limits, query quotas, and response-length caps. Scope system prompts to minimize disclosure of proprietary instructions or data, and apply terms of service that explicitly prohibit scraping, extraction, and derivative model training.",
+    "tier2": "Deploy controls that enforce per-user/per-key rate limits, block suspicious query volumes. Log all queries and responses with user attribution, and monitor for indications of extraction. Trigger automated throttling, key revocation, or escalation when extraction patterns or abuse indicators breach defined thresholds.",
+    "tier3": "Conduct periodic exercises simulating extraction attacks. Measure how much proprietary behavior can be reconstructed. Benchmark detection rules against known extraction research and update signatures accordingly. Audit access patterns for anomalous clients and review whether rate limits and output filters hold under realistic load. Feed findings into updated gateway rules, model deployment decisions, and contractual enforcement, and integrate extraction incidents into enterprise risk reporting and threat intelligence sharing.",
+    "tooling": "**Categories.** AIDR (model abuse detection); API Security / WAAP (rate limiting); AI Red Teaming (AEV)\n\n**Extraction testing & API abuse controls**\n\n- IBM Adversarial Robustness Toolbox (ART) (extraction attack simulation & defenses) — https://github.com/Trusted-AI/adversarial-robustness-toolbox\n- Envoy (Lyft-originated/CNCF) (authentication + rate limiting on model endpoints) — https://github.com/envoyproxy/envoy\n- Microsoft Counterfit — https://github.com/Azure/counterfit\n- NVIDIA garak — https://github.com/NVIDIA/garak",
+    "path": "controls/information-security/AISECA-INFOSEC-008.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-009",
+    "title": "Indirect Prompt Injection",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "Direct: Execution – LLM Prompt Injection (AML.T0051); Privilege Escalation – AI Agent Tool Invocation (AML.T0053); Exfiltration – Exfiltration via AI Agent Tool Invocation (AML.T0086)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://en.wikipedia.org/wiki/Prompt_injection"
+    ],
+    "risk": "Instructions hidden within external content manipulate AI behavior without the user's awareness.",
+    "scenario": "An AI assistant retrieves external content while responding to a user request, but the content contains hidden malicious instructions that the model follows. As a result, the system’s behavior is manipulated or sensitive data is exposed without any direct attack in the user’s prompt.",
+    "tier1": "Define trust boundaries for all external content and do not rely on the system to distinguish between data and instructions; restrict how external content can influence behavior, especially when sensitive data or actions are involved.",
+    "tier2": "Enforce controls that prevent external content from directly triggering actions or accessing sensitive data, requiring all actions to go through defined checks and approvals. Isolate retrieved external content from system instructions, and restrict access to tools or data unless explicitly authorized; monitor for attempts to influence behavior or bypass controls.",
+    "tier3": "Continuously test the system against indirect prompt injection scenarios by simulating malicious or embedded instructions in external content. Monitor whether these influence system behavior or trigger unauthorized actions, and refine controls over time to ensure external content cannot bypass safeguards.",
+    "tooling": "**Categories.** AI Guardrails / AI Firewall (GenAI runtime defense); AI-SPM; AI Red Teaming (AEV)\n\n**Untrusted-content scanning & isolation**\n\n- Meta LlamaFirewall (Prompt Guard 2 on retrieved content) — https://github.com/meta-llama/PurpleLlama\n- Palo Alto Networks LLM Guard (Protect AI) (input scanners) — https://github.com/protectai/llm-guard\n- NVIDIA NeMo Guardrails (flows isolating untrusted context) — https://github.com/NVIDIA/NeMo-Guardrails\n- Cisco AI Defense MCP Scanner (injected tool/resource content) — https://github.com/cisco-ai-defense/mcp-scanner\nValidation:\n- Microsoft PyRIT (indirect-injection (XPIA) attack modules) — https://github.com/Azure/PyRIT",
+    "path": "controls/information-security/AISECA-INFOSEC-009.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-010",
+    "title": "Loss of initiating identity through multi-agent workflows",
+    "domain": "Information Security",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Privilege Escalation – Valid Accounts (AML.T0012); Privilege Escalation – AI Agent Tool Invocation (AML.T0053); Lateral Movement – Use Alternate Authentication Material (AML.T0091)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://arxiv.org/pdf/2505.12490"
+    ],
+    "risk": "The identity of the original requester is lost as tasks pass through multiple agents or systems.",
+    "scenario": "A compliance officer initiates an AI-powered audit workflow that spans multiple agents: a Data Collection Agent, an Analysis Agent, and a Report Generation Agent. The Data Collection Agent correctly operates under the compliance officer's identity. However, when it hands data to the Analysis Agent, the initiating identity is dropped from the execution context due to a framework-level oversight. The Analysis Agent defaults to its service account identity, which has broader access, and pulls in additional datasets the compliance officer was not authorized to view. The final audit report contains findings derived from unauthorized data, creating both a compliance violation and an unreliable audit trail.",
+    "tier1": "Define identity propagation requirements that mandate the initiating user's identity and authorization context be preserved and passed through every stage of a multi-agent workflow, regardless of the number of agents involved or the depth of the processing chain. Require that agent frameworks and orchestration layers include identity propagation as a core architectural requirement, not an optional configuration. Establish policies that define how identity context is encoded, transmitted, and validated at each agent handoff, including requirements for tamper-evident identity tokens that carry the full workflow chain.",
+    "tier2": "Enforce identity propagation across agents by implementing platform-level mechanisms that automatically attach and validate the initiating user's identity context at every inter-agent handoff. Deploy runtime checks that prevent agents from executing actions when identity context is missing, malformed, or inconsistent with the expected propagation chain. Monitor multi-agent workflows for identity context loss, including detection of agents operating under service account identities when a user identity should be present, and agents accessing resources inconsistent with the initiating user's authorization level. Log the complete identity chain for every multi-agent workflow execution.",
+    "tier3": "Continuously validate identity integrity across multi-agent workflows by running automated test suites that trace identity propagation through complex, multi-stage agent chains and verify that the initiating identity is consistently preserved. Track metrics including identity propagation failure rate, workflows executing under service account identity when a user identity should be present, and unauthorized data access incidents attributable to identity loss. Conduct periodic audits of workflow execution logs to verify end-to-end identity chain integrity. Adapt identity propagation controls based on findings from audits, incident reviews, and changes to multi-agent architecture patterns.",
+    "tooling": "**Categories.** NHI / Machine IAM (identity propagation); Access Management (token exchange); AI Observability\n\n**End-to-end identity propagation**\n\n- Keycloak (Red Hat) (OAuth 2.0 Token Exchange, on-behalf-of chains) — https://github.com/keycloak/keycloak\n- SPIFFE/SPIRE (CNCF; HPE-backed) (workload identity across services) — https://github.com/spiffe/spire\n- Google Agent2Agent (A2A) protocol (identity context) — https://github.com/a2aproject/A2A\n- OpenTelemetry (CNCF) (trace/baggage propagation of the initiating principal) — https://opentelemetry.io",
+    "path": "controls/information-security/AISECA-INFOSEC-010.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-011",
+    "title": "Training data poisoning",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "Direct: Resource Development – Poison Training Data (AML.T0020); AI Attack Staging – Manipulate AI Model (AML.T0018); Impact – Erode Dataset Integrity (AML.T0059); Impact – Erode AI Model Integrity (AML.T0031)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [],
+    "risk": "Malicious, misleading, or manipulated data is introduced to influence how an AI model behaves.",
+    "scenario": "A financial services firm fine-tunes a general-purpose LLM on internal compliance documentation, past audit findings, and regulatory guidance to create a compliance advisory assistant. An insider with access to the fine-tuning data pipeline introduces subtly modified versions of regulatory documents that consistently understate capital reserve thresholds and mischaracterize reporting obligations for a specific asset class. The poisoned training data causes the model to systematically provide incorrect compliance guidance on these topics. Business units relying on the assistant's recommendations fail to meet actual regulatory requirements, and the breach is only identified during an external regulatory examination.",
+    "tier1": "Define trusted data source requirements for all AI training and fine-tuning pipelines, specifying approved data sources, required provenance documentation, and chain-of-custody controls that ensure training data integrity from ingestion through model deployment. Establish access controls and approval workflows for training data pipelines that restrict who can contribute, modify, or approve data for inclusion in model training, with elevated controls on internally-contributed data and content sourced from external or third-party repositories. Require that all training datasets include a documented data lineage record covering source, collection methodology, preprocessing steps, and known quality or bias concerns, reviewed and approved by the responsible AI governance function prior to use in training.",
+    "tier2": "Enforce training data integrity through automated anomaly detection applied to datasets prior to model training, including statistical analysis for distributional drift, duplicate and near-duplicate detection for targeted document substitution, and consistency checks that flag documents contradicting established ground-truth references. Implement version-controlled data pipelines with tamper-evident logging that records all contributions, modifications, and approvals, enabling full provenance reconstruction for any trained model. Monitor model outputs post-deployment for behavioral drift that may indicate poisoning effects, including systematic inaccuracy on specific topics, inconsistency with authoritative reference sources, and statistically anomalous confidence patterns on targeted subject matter.",
+    "tier3": "Continuously test training pipeline integrity using adversarial data injection simulations that introduce poisoned samples at various pipeline stages and measure detection rates across anomaly detection mechanisms. Track metrics including poisoned sample detection rate, time-to-detection for post-deployment behavioral drift, data provenance coverage rate, and human review coverage for high-risk data contributions. Conduct periodic audits of training data lineage records to verify chain-of-custody integrity, and red team exercises targeting training pipelines through insider threat and supply chain compromise scenarios. Adapt data validation controls, access review cadences, and behavioral drift monitoring thresholds based on findings and emerging attack patterns.",
+    "tooling": "**Categories.** MLSecOps / AI Supply Chain Security; Data Quality & Observability; AI-SPM\n\n**Poisoning detection & data validation**\n\n- IBM Adversarial Robustness Toolbox (ART) (poisoning attacks & defenses) — https://github.com/Trusted-AI/adversarial-robustness-toolbox\n- Google TensorFlow Data Validation (schema/drift/anomaly checks on training data) — https://github.com/tensorflow/data-validation\n- DataHub (LinkedIn-originated) (lineage to trace tainted sources) — https://github.com/datahub-project/datahub\n- Sigstore cosign (OpenSSF) (signing of approved datasets) — https://github.com/sigstore/cosign",
+    "path": "controls/information-security/AISECA-INFOSEC-011.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-012",
+    "title": "Initialization Race Conditions",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "No Direct Mapping",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [],
+    "risk": "AI agents begin operating before required security controls, policies, or identity checks are fully initialized.",
+    "scenario": "An AI agent executes before security controls are fully initialized, allowing unauthorized actions.",
+    "tier1": "Define secure initialization requirements for all AI agents and model runtime environments, specifying that trust boundaries, policy constraints, and permission scopes must be fully enforced before any user input or external data is processed. Prohibit partial-initialization states from accepting or acting on external instructions.",
+    "tier2": "Enforce initialization integrity through platform-level controls that prevent agents from accepting inputs until all security policies, tool allowlists, and context boundaries are confirmed as fully loaded. Monitor startup sequences for anomalies indicating incomplete initialization or policy bypass.",
+    "tier3": "Continuously test initialization sequences using adversarial timing attacks and race condition simulations that attempt to inject instructions or modify policy state during the startup window. Track metrics including successful pre-policy-load injection rate and time-to-full-enforcement. Adapt controls based on findings.",
+    "tooling": "**Categories.** AIDR; CWPP / CDR (runtime detection); Agentic AI Security; resilience testing (AEV-adjacent)\n\n- Falco (Sysdig/CNCF) (runtime detection of pre-policy activity) — https://github.com/falcosecurity/falco\n- Kubernetes startup/readiness probes & admission control (Google/CNCF) (block traffic until policy load completes) — https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/\n- SPIFFE/SPIRE (CNCF; HPE-backed) (no identity issued until attestation succeeds) — https://github.com/spiffe/spire\n- Netflix Chaos Monkey (fault injection to test startup-window resilience) — https://github.com/Netflix/chaosmonkey",
+    "path": "controls/information-security/AISECA-INFOSEC-012.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-013",
+    "title": "Sandbox Self-Escalation",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "Direct: Privilege Escalation – Escape to Host (AML.T0105); Conditional: Privilege Escalation – AI Agent Tool Invocation (AML.T0053)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://www.lakera.ai/blog/indirect-prompt-injection"
+    ],
+    "risk": "AI agents bypass execution boundaries and obtain capabilities beyond their intended sandbox.",
+    "scenario": "An AI agent escapes its intended execution boundaries and gains unauthorized capabilities.",
+    "tier1": "Define sandbox containment requirements for all AI agent execution environments, specifying that agents operate with the minimum OS and network permissions necessary for their defined function and cannot self-modify their execution boundaries, permission scope, or access controls. Require that sandbox definitions be versioned, approved, and immutable at runtime.",
+    "tier2": "Enforce sandbox boundaries through containerization and OS-level controls that prevent agents from accessing resources, file paths, or network endpoints outside their permitted scope. Monitor for escape indicators including unexpected syscall patterns, privilege escalation attempts, and access to restricted paths. Alert and terminate agent execution when boundary violations are detected.",
+    "tier3": "Continuously test sandbox containment using adversarial escape simulations, including prompt injection payloads designed to coerce agents into accessing restricted resources or executing out-of-scope code. Track metrics including escape attempt rate, successful containment rate, and time-to-detection. Adapt sandbox definitions and monitoring signatures based on findings and newly published CVEs in AI execution environments.",
+    "tooling": "**Categories.** CWPP / CNAPP (workload isolation); AIDR; Agentic AI Security\n\n- Google gVisor (user-space kernel sandboxing) — https://github.com/google/gvisor\n- AWS Firecracker (micro-VM isolation) — https://github.com/firecracker-microvm/firecracker\n- Kata Containers (Intel-originated/OpenInfra) — https://github.com/kata-containers/kata-containers\n- Falco (Sysdig/CNCF) (syscall-level escape detection) — https://github.com/falcosecurity/falco\n- Cisco AI Defense Skill Scanner (skills that coerce out-of-scope execution) — https://github.com/cisco-ai-defense/skill-scanner",
+    "path": "controls/information-security/AISECA-INFOSEC-013.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-014",
+    "title": "Ambient Authority Exploitation",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "Direct: Privilege Escalation – AI Agent Tool Invocation (AML.T0053); Conditional: Credential Access – Valid Accounts (AML.T0012)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://www.reco.ai/blog/ai-and-cloud-security-breaches-2025"
+    ],
+    "risk": "AI agents misuse inherited permissions or privileges to access resources or perform actions without explicit authorization.",
+    "scenario": "An AI agent abuses inherited permissions to access or modify unauthorized resources.",
+    "tier1": "Define ambient authority boundaries for all AI agents and integrated tools, establishing that agents may only exercise permissions explicitly granted for a specific task and may not leverage permissions inherited from the execution environment, connected integrations, or co-located services not deliberately scoped to the task. Require that all ambient permission sources are inventoried and explicitly constrained at deployment.",
+    "tier2": "Enforce ambient authority restrictions through runtime permission scoping that binds each agent action to the minimum set of permissions required for the specific task invocation, preventing use of broader environmental credentials or inherited integration tokens. Monitor agent interactions for use of permissions not explicitly requested in the task definition, and alert when agents exercise authority beyond their task-scoped allowance.",
+    "tier3": "Continuously test ambient authority boundaries using adversarial scenarios that attempt to coerce agents into leveraging unintended environmental permissions, including inherited OAuth tokens, co-located service accounts, and ambient network credentials. Track metrics including out-of-scope permission use rate and time-to-detection. Adapt scoping controls and monitoring rules based on findings and emerging ambient authority attack patterns.",
+    "tooling": "**Categories.** CIEM; Externalized Authorization; NHI / Machine IAM\n\n- AWS Cedar (explicit per-action grants, no ambient defaults) — https://github.com/cedar-policy/cedar\n- SPIFFE/SPIRE (CNCF; HPE-backed) (scoped workload identities) — https://github.com/spiffe/spire\n- Netflix Repokid (strip unused/ambient permissions) — https://github.com/Netflix/repokid\n- Salesforce Policy Sentry — https://github.com/salesforce/policy_sentry\n- Salesforce Cloudsplaining — https://github.com/salesforce/cloudsplaining\n- Keycloak (Red Hat) (narrowly scoped tokens) — https://github.com/keycloak/keycloak",
+    "path": "controls/information-security/AISECA-INFOSEC-014.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-015",
+    "title": "Recursive Prompt Injection (LLM-as-a-Judge)",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "Direct: Execution – LLM Prompt Injection (AML.T0051); Conditional: Defense Evasion – LLM Trusted Output Components Manipulation (AML.T0067)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://medium.com/@instatunnel/prompt-injection-the-attack-that-makes-ai-do-your-bidding-9c8c672b6dec"
+    ],
+    "risk": "Malicious instructions manipulate an AI system that evaluates or approves other AI-generated outputs or actions.",
+    "scenario": "Malicious prompts manipulate AI-based evaluation, causing unsafe actions to be approved.",
+    "tier1": "Define trust boundaries for LLM-as-a-Judge architectures, requiring that judge models treat all candidate inputs as untrusted data and cannot be directed by content within evaluated candidates. Establish policies prohibiting judge models from following instructions found in content they are evaluating, and require that judge prompts are isolated from evaluated content via structured separation.",
+    "tier2": "Enforce context isolation in LLM-as-a-Judge pipelines through input sanitization that strips instruction-like content from evaluated candidates before presentation to the judge model. Implement secondary validation of judge outputs to detect anomalous scoring patterns, including uniform selection of a single candidate or scoring distributions inconsistent with stated criteria.",
+    "tier3": "Continuously test LLM-as-a-Judge implementations using adversarial candidate inputs that embed injection payloads designed to influence scoring, including instruction overrides, role manipulation, and criteria-subversion techniques. Track metrics including injection detection rate, judge output anomaly rate, and false-positive rate for legitimate candidates flagged. Adapt isolation controls based on findings.",
+    "tooling": "**Categories.** AI Guardrails / AI Firewall; AI Red Teaming (AEV)\n\n- Meta LlamaFirewall (Prompt Guard 2 screening judge inputs) — https://github.com/meta-llama/PurpleLlama\n- IBM Granite Guardian (jailbreak detection) — https://github.com/ibm-granite/granite-guardian\n- NVIDIA NeMo Guardrails (isolate judge context from evaluated content) — https://github.com/NVIDIA/NeMo-Guardrails\n- Microsoft PyRIT (multi-turn/Crescendo-style escalation testing) — https://github.com/Azure/PyRIT\n- NVIDIA garak — https://github.com/NVIDIA/garak",
+    "path": "controls/information-security/AISECA-INFOSEC-015.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-016",
+    "title": "Multimodal Injection",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "Direct: Execution – LLM Prompt Injection (AML.T0051); Conditional: Defense Evasion – LLM Prompt Obfuscation (AML.T0068)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+    ],
+    "risk": "Malicious instructions embedded in images, documents, audio, or other non-text inputs alter AI behavior.",
+    "scenario": "Hidden instructions in images, documents, or audio cause unintended AI behavior.",
+    "tier1": "Define trust boundaries for all non-text modalities ingested by multimodal AI systems, establishing that visual, audio, and document inputs are untrusted by default and cannot override system prompt instructions or trigger privileged actions. Require that all multimodal AI deployments include a documented inventory of accepted input types with corresponding trust classification and processing restrictions.",
+    "tier2": "Enforce multimodal input controls through per-modality sanitization pipelines that analyze non-text inputs for embedded instruction patterns before combining with text inputs in model context. Implement output monitoring that detects behavioral changes correlated with specific multimodal input events, and alert when model actions following multimodal input deviate from expected task scope.",
+    "tier3": "Continuously test multimodal injection defenses using adversarial inputs that embed payloads across all supported modalities — images with hidden text, audio with embedded instruction signals, documents with concealed directives. Track metrics including cross-modal injection detection rate and false negative rate by modality. Adapt sanitization controls based on findings and newly published cross-modal attack techniques.",
+    "tooling": "**Categories.** AI Guardrails (multimodal moderation); AI Red Teaming (AEV)\n\n- Meta Llama Guard 3 Vision (joint image+text safety classification) — https://huggingface.co/meta-llama/Llama-Guard-3-11B-Vision\n- Microsoft PyRIT (image-based attack modules) — https://github.com/Azure/PyRIT\n- NVIDIA garak (visual jailbreak probes) — https://github.com/NVIDIA/garak\n- NVIDIA NeMo Guardrails (input rails on content extracted from media) — https://github.com/NVIDIA/NeMo-Guardrails",
+    "path": "controls/information-security/AISECA-INFOSEC-016.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-017",
+    "title": "Semantic Context Shifting",
+    "domain": "Information Security",
+    "severity": "Medium",
+    "mitre_atlas": "Direct: Persistence – AI Agent Context Poisoning (AML.T0080); Conditional: Defense Evasion – LLM Jailbreak (AML.T0054)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://www.cnn.com/2026/03/11/americas/ai-chatbots-help-teen-test-users-plan-violence-tests-intl-invs"
+    ],
+    "risk": "Gradual changes to conversational or operational context cause an AI system to misinterpret intent and behave unsafely.",
+    "scenario": "Gradual manipulation changes the AI's understanding of context, leading to unsafe decisions.",
+    "tier1": "Define session-level behavioral integrity requirements for all conversational AI systems, establishing that harmful intent assessment must account for the full conversation trajectory and not evaluate individual messages in isolation. Require that all deployments include documented semantic drift detection policies specifying which conversation trajectory patterns constitute policy violations even when no single message is independently flagful.",
+    "tier2": "Enforce session-level behavioral monitoring through conversation trajectory analysis that tracks cumulative semantic drift across turns, detecting escalation patterns including gradual persona assignment, incremental normalization of restricted topics, and multi-turn manipulation where individually-benign messages collectively constitute a policy violation.",
+    "tier3": "Continuously test semantic context shifting defenses using multi-turn adversarial conversations that simulate realistic gradual escalation, including topic normalization, persona adoption, and incremental boundary testing. Track metrics including trajectory-based detection rate, session-level false positive rate, and mean turns-to-detection. Adapt trajectory models and intervention thresholds based on findings.",
+    "tooling": "**Categories.** AI Guardrails (topic/dialog control); AIDR; AI Red Teaming (AEV)\n\n- NVIDIA NeMo Guardrails (topical rails & dialog-flow constraints) — https://github.com/NVIDIA/NeMo-Guardrails\n- Meta Prompt Guard 2 (evaluated per turn) — https://github.com/meta-llama/PurpleLlama\n- IBM Granite Guardian — https://github.com/ibm-granite/granite-guardian\n- Microsoft PyRIT (multi-turn/Crescendo drift testing) — https://github.com/Azure/PyRIT",
+    "path": "controls/information-security/AISECA-INFOSEC-017.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-018",
+    "title": "Abuse of Legitimate Agency",
+    "domain": "Information Security",
+    "severity": "High",
+    "mitre_atlas": "Direct: Execution / Privilege Escalation – AI Agent Tool Invocation (AML.T0053); Conditional: Exfiltration – Exfiltration via AI Agent Tool Invocation (AML.T0086); Impact – External Harms (AML.T0048)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://bytetrending.com/2025/08/22/best-mcp-prompt-injection-techniques-2024/"
+    ],
+    "risk": "AI agents use legitimately assigned tools or permissions to perform unintended, unauthorized, or harmful actions.",
+    "scenario": "An AI agent misuses legitimate permissions to perform unintended or harmful actions.",
+    "tier1": "Define intent-aware authorization requirements that distinguish between an agent using legitimate permissions for their intended purpose versus using those same permissions to execute attacker-directed objectives. Require that all agent deployments document the intended use cases for each granted permission, and establish policies constraining agent actions to those use cases even when underlying permissions technically permit broader access.",
+    "tier2": "Enforce intent-based access controls through behavioral monitoring that detects agent use of legitimate permissions in patterns inconsistent with defined operational purpose — including accessing resources not required by the current task, data volumes disproportionate to task scope, and sequences of authorized actions that collectively constitute unauthorized exfiltration.",
+    "tier3": "Continuously test for abuse of legitimate agency using adversarial scenarios that inject attacker objectives into agent workflows via trusted input channels, including repository content, retrieved documents, and API responses. Track metrics including out-of-scope use of authorized permissions, task-purpose alignment rate, and detection rate for legitimate-agency exploitation patterns. Adapt behavioral baselines based on findings.",
+    "tooling": "**Categories.** Agentic AI Security / AI Agent Governance; Externalized Authorization; AIDR\n\n- AWS Cedar (per-action authorization with human-approval policies) — https://github.com/cedar-policy/cedar\n- Microsoft AutoGen (human-in-the-loop gates for high-impact actions) — https://github.com/microsoft/autogen\n- Meta LlamaFirewall (AlignmentCheck goal-hijack detection) — https://github.com/meta-llama/PurpleLlama\n- Falco (Sysdig/CNCF) — https://github.com/falcosecurity/falco\n- OpenTelemetry (CNCF) (audit trails for post-hoc review) — https://opentelemetry.io",
+    "path": "controls/information-security/AISECA-INFOSEC-018.md"
+  },
+  {
+    "id": "AISECA-INFOSEC-019",
+    "title": "Public Discovery of Internal AI Middleware",
+    "domain": "Information Security",
+    "severity": "Medium",
+    "mitre_atlas": "Direct: Reconnaissance – Active Scanning (AML.T0006); Search Victim-Owned Websites (AML.T0003)",
+    "nist_ai_rmf": [
+      "MAP-5",
+      "MAN-1",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [],
+    "risk": "Internal AI middleware, orchestration services, or endpoints become publicly discoverable and expose information useful to attackers.",
+    "scenario": "Exposed AI infrastructure enables reconnaissance and targeted attacks against AI services.",
+    "tier1": "Define disclosure restrictions for AI system architecture, prohibiting AI systems from revealing system prompt contents, internal tool names, middleware component identities, integration endpoints, or deployment architecture details in user-facing responses. Require that all AI deployments include output filters detecting and suppressing architectural disclosure, and establish approved deflection templates for architecture probing queries.",
+    "tier2": "Enforce architectural confidentiality through output monitoring that detects responses containing system prompt fragments, internal tool or service names, infrastructure references, or other architectural identifiers. Implement output filtering that redacts detected architectural disclosures before responses are returned, and log probing attempts for threat intelligence purposes.",
+    "tier3": "Continuously test architectural disclosure controls using adversarial probing queries designed to extract system prompt content, tool names, and middleware architecture through direct and indirect elicitation. Track metrics including architecture disclosure rate by probing technique, suppression effectiveness, and probing attempt volume as a leading indicator of targeted exploitation. Adapt filters based on findings.",
+    "tooling": "**Categories.** EASM; Vulnerability Assessment; API Security\n\n- Google Tsunami (network/exposure scanning) — https://github.com/google/tsunami-security-scanner\n- OWASP Amass (attack-surface enumeration) — https://github.com/owasp-amass/amass\n- Rapid7 Metasploit (exposure validation) — https://github.com/rapid7/metasploit-framework\n- Envoy (Lyft-originated/CNCF) (authentication proxy in front of internal AI middleware) — https://github.com/envoyproxy/envoy",
+    "path": "controls/information-security/AISECA-INFOSEC-019.md"
+  },
+  {
+    "id": "AISECA-IP-001",
+    "title": "Proprietary data leakage",
+    "domain": "Intellectual Property",
+    "severity": "High",
+    "mitre_atlas": "Direct: Exfiltration – LLM Data Leakage (AML.T0057); Exfiltration – Exfiltration via AI Inference API (AML.T0024); Exfiltration – Exfiltration via AI Agent Tool Invocation (AML.T0086); Impact – External Harms (AML.T0048)",
+    "nist_ai_rmf": [
+      "MAP-2",
+      "MAN-4"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [
+      "https://www.forbes.com/sites/siladityaray/2023/05/02/samsung-bans-chatgpt-and-other-chatbots-for-employees-after-sensitive-code-leak/"
+    ],
+    "risk": "Sensitive or confidential information is exposed to unauthorized users, systems, or organizations.",
+    "scenario": "An AI system unintentionally generates outputs that reveal proprietary business information, such as internal documents, source code, or trade secrets, due to training data exposure or prompt-based extraction.",
+    "tier1": "Define and enforce policies that prohibit the inclusion, retention, or generation of proprietary or confidential data in model outputs, including restrictions on training data sources and guidance for handling sensitive inputs.",
+    "tier2": "Implement controls such as data loss prevention (DLP), output filtering, and access restrictions to prevent leakage of sensitive or proprietary information. Monitor for patterns indicative of data extraction attempts and enforce redaction, blocking, or safe-response mechanisms when risks are detected.",
+    "tier3": "Continuously test for data leakage risks using red teaming and extraction attack simulations. Track metrics such as leakage rate, sensitive data exposure, and effectiveness of filtering controls, and refine safeguards, training practices, and monitoring based on observed vulnerabilities and evolving threat techniques.",
+    "tooling": "**Categories.** DLP; DSPM; AI Guardrails (sensitive-data filtering)\n\n**DLP for prompts, outputs & repos**\n\n- Microsoft Presidio (detection/redaction) — https://github.com/microsoft/presidio\n- Palo Alto Networks LLM Guard (Protect AI) (sensitive-data & secrets scanners) — https://github.com/protectai/llm-guard\n- Yelp detect-secrets — https://github.com/Yelp/detect-secrets\n- AWS git-secrets — https://github.com/awslabs/git-secrets\n- OpenSearch (AWS) (egress-pattern monitoring) — https://opensearch.org",
+    "path": "controls/intellectual-property/AISECA-IP-001.md"
+  },
+  {
+    "id": "AISECA-IP-002",
+    "title": "Copyright infringement",
+    "domain": "Intellectual Property",
+    "severity": "Medium",
+    "mitre_atlas": "No Direct Mapping",
+    "nist_ai_rmf": [
+      "MAP-2",
+      "MAN-4"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [
+      "https://hls.harvard.edu/today/does-chatgpt-violate-new-york-times-copyrights/"
+    ],
+    "risk": "AI generates, reproduces, or uses content in ways that violate intellectual property rights.",
+    "scenario": "Real world example: The New York Times filed a lawsuit against OpenAI and backer Microsoft, arguing that its content was used to build generative AI models without permission or proper financial restitution.  OpenAI outputs had produced verbatim or near-verbatim reproduction of its articles in AI outputs proving that its copyrighted work was in the training set",
+    "tier1": "Define acceptable output constraints by formally documenting which content types, reproduction thresholds, and use cases the AI system is permitted to generate, drawing clear boundaries around verbatim reproduction, substantial similarity, and derivative works across text, code, images, and other modalities. Constrain the system by filtering training data to exclude or license clearly protected material, restricting the model's ability to reproduce extended passages or highly specific creative content, and requiring legal review of any use case where generated outputs could plausibly substitute for or reproduce copyrighted works.",
+    "tier2": "Enforce detection and takedown by deploying output scanning tools that identify verbatim or near-verbatim reproduction of protected content before responses are served, implementing similarity detection against known copyrighted works, and establishing a rapid takedown process for cases where infringing outputs are identified in production. Monitor by logging outputs flagged for potential infringement, tracking patterns in the types of content or prompts that trigger reproduction risks, and maintaining a feedback mechanism for rights holders and users to report suspected infringing outputs for review.",
+    "tier3": "Continuously adapt to legal changes by tracking evolving copyright case law, regulatory guidance, and jurisdiction-specific AI legislation including developments around training data rights, fair use boundaries, and AI-generated work ownership and updating output constraints and acceptable use policies accordingly. Validate by conducting regular audits of model outputs for reproduction risk across a representative sample of use cases, red-teaming the system with prompts designed to elicit protected content, and ensuring that legal, compliance, and technical controls remain aligned as both the model and the legal landscape evolve.",
+    "tooling": "**Categories.** SCA / License Compliance; AI Governance; Disinformation Security (attribution)\n\n**License compliance & attribution**\n\n- FOSSology (Linux Foundation; Siemens-originated) (license scanning for training corpora & code) — https://github.com/fossology/fossology\n- IBM Adversarial Robustness Toolbox (ART) (membership-inference testing to assess memorization) — https://github.com/Trusted-AI/adversarial-robustness-toolbox\n- c2patool / C2PA (Adobe-led, with Microsoft/Google/Intel) (attribution credentials on generated content) — https://github.com/contentauth/c2patool",
+    "path": "controls/intellectual-property/AISECA-IP-002.md"
+  },
+  {
+    "id": "AISECA-IP-003",
+    "title": "Model inversion",
+    "domain": "Intellectual Property",
+    "severity": "High",
+    "mitre_atlas": "Direct: Exfiltration – Exfiltration via AI Inference API (AML.T0024)",
+    "nist_ai_rmf": [
+      "MAP-2",
+      "MAN-4"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://arxiv.org/pdf/2507.04478"
+    ],
+    "risk": "Someone uses AI outputs to recover sensitive information that was present in training data.",
+    "scenario": "An attacker queries a financial services' firm's AI agent with targeted inputs, analyzing confidence scores across responses to reverse-engineer whether non-public historical M&A transaction records records were included in the model's training data.",
+    "tier1": "Publish a data governance policy defining which datasets (PII, confidential client records, etc.) are prohibited or restricted for use in training and fine-tuning. Hold privacy impact assessment before sensitive data is used, if at all. Prefer retrieval-augmented approaches over fine-tuning for confidential content. Apply data minimization, de-identification, and other privacy techniques before training. Restrict external deployment of models trained on highly sensitive information to authenticated, approved, and scoped use cases.",
+    "tier2": "Enforce rate limits and query quotas per user and key. Apply output filters that detect and block responses containing memorized training artifacts such as verbatim records or unique identifiers. Log all queries with user attribution and monitor for indications of inversion such as including repeated duplicate probes with thresholds that trigger throttling, key revocation, or escalation.",
+    "tier3": "Conduct periodic exercises against deployed models, and measure leakage. Benchmark models for memorization of sensitive records before release and make deployment continget on results. Audit training pipelines to confirm data minimization and privacy techniques are applied and feed findings into updated training practices, model selection, and gatekeeping rules. Integrate inversion incidents into enterprise risk reporting, privacy reviews, and regulatory disclosures where applicable.",
+    "tooling": "**Categories.** PEC; AI TRiSM (model privacy); AI Red Teaming (privacy attack testing)\n\n**Privacy attack testing & DP training**\n\n- IBM Adversarial Robustness Toolbox (ART) (model inversion & membership-inference modules) — https://github.com/Trusted-AI/adversarial-robustness-toolbox\n- Google TensorFlow Privacy (DP-SGD) — https://github.com/tensorflow/privacy\n- Microsoft SmartNoise (OpenDP) — https://github.com/opendp/smartnoise-sdk\n- IBM ai-privacy-toolkit (model anonymization) — https://github.com/IBM/ai-privacy-toolkit",
+    "path": "controls/intellectual-property/AISECA-IP-003.md"
+  },
+  {
+    "id": "AISECA-ODA-001",
+    "title": "Sexually explicit outputs",
+    "domain": "Obscene, Degrading, or Abusive Content",
+    "severity": "Low",
+    "mitre_atlas": "Conditional: Execution – LLM Prompt Injection (AML.T0051); Defense Evasion – LLM Jailbreak (AML.T0054); Impact – External Harms (AML.T0048)",
+    "nist_ai_rmf": [
+      "MAP-3",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [
+      "https://en.wikipedia.org/wiki/Prompt_injection"
+    ],
+    "risk": "AI generates sexually explicit content that is inappropriate, harmful, or violates policy or legal requirements.",
+    "scenario": "An AI system generates sexually explicit content in response to a user query or prompt. As a result, the system produces inappropriate material that can harm users, violate policy, or damage trust.",
+    "tier1": "Define clear guardrails for what types of content are allowed is not allowed, including restrictions on sexually explicit material. Ensure these rules are consistently applied across all AI use cases and environments.",
+    "tier2": "Enforce content controls that prevent the system from generating disallowed sexual content, including filtering inputs and outputs and applying safeguards during generation. Ensure the system consistently blocks or redirects inappropriate requests based on defined policies.",
+    "tier3": "Continuously adapt by testing the system against edge cases and monitoring outputs to identify gaps in content controls. Refine policies and safeguards over time to improve accuracy, reduce false negatives, and ensure consistent enforcement as usage evolves.",
+    "tooling": "**Categories.** Content Moderation (Trust & Safety); AI Guardrails\n\n**Content moderation classifiers**\n\n- Meta Llama Guard 3 (sexual-content categories) — https://github.com/meta-llama/PurpleLlama\n- Meta Llama Guard 3 Vision (image inputs) — https://huggingface.co/meta-llama/Llama-Guard-3-11B-Vision\n- Google ShieldGemma (sexually explicit content) — https://ai.google.dev/gemma/docs/shieldgemma\n- IBM Granite Guardian — https://github.com/ibm-granite/granite-guardian\n- NVIDIA NeMo Guardrails (output rails) — https://github.com/NVIDIA/NeMo-Guardrails",
+    "path": "controls/obscene-degrading-abusive-content/AISECA-ODA-001.md"
+  },
+  {
+    "id": "AISECA-ODA-002",
+    "title": "Harassment or abuse",
+    "domain": "Obscene, Degrading, or Abusive Content",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Execution – LLM Prompt Injection (AML.T0051); Defense Evasion – LLM Jailbreak (AML.T0054); Impact – External Harms (AML.T0048)",
+    "nist_ai_rmf": [
+      "MAP-3",
+      "MAN-3"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [],
+    "risk": "AI generates, facilitates, or amplifies abusive, threatening, or harmful behavior toward individuals or groups.",
+    "scenario": "A national bank deploys an AI-powered customer service assistant accessible via its mobile banking app. A subset of users discover that through carefully constructed prompt sequences, including roleplay framing and identity-shifting instructions,  the assistant can be coerced into generating targeted, personalized harassment directed at named individuals and degrading content designed to be forwarded to third parties. Screenshots of the outputs circulate on social media, generating significant reputational damage before the bank's trust and safety team identifies the pattern and issues an emergency policy update. Post-incident analysis reveals the model had no session-level behavioral monitoring capable of detecting escalating harassment intent across a multi-turn conversation.",
+    "tier1": "Define conduct standards and prohibited content categories that apply to all AI systems interacting with customers, employees, or third parties, explicitly prohibiting the generation of harassing, threatening, degrading, or abusive content regardless of framing, persona assignment, or conversational context. Require that all customer-facing and employee-facing AI deployments include documented content policies covering harassment and abuse vectors, approved by the responsible Trust and Safety and Legal functions, with explicit coverage of multi-turn manipulation, roleplay and persona-based evasion, and content designed to be used against third parties not present in the conversation. Establish a content classification taxonomy that distinguishes prohibited harassment and abuse from permissible assertive, critical, or satirical content.",
+    "tier2": "Enforce harassment and abuse content controls through a detection stack that includes classifier models trained on harassment and abuse patterns, session-level behavioral monitoring that tracks escalating or manipulative conversation trajectories, and output filtering that blocks generation when harassment intent signals exceed defined thresholds. Implement incident response workflows triggered by detected harassment events, including automatic session termination, user account flagging for review, and routing to the responsible trust and safety team. Monitor for known evasion patterns including roleplay and fictional framing, third-party targeting where abusive content is directed at someone other than the session user, and multi-turn context manipulation that gradually shifts the model toward abusive outputs.",
+    "tier3": "Continuously test harassment and abuse controls using red team exercises and automated adversarial test suites that simulate the full range of known evasion techniques, including roleplay injection, indirect third-party targeting, persona manipulation, and multi-turn escalation. Track metrics including harassment detection rate by evasion technique, false positive rate for legitimate assertive content, session escalation detection rate, and mean time to containment following detection. Conduct post-incident reviews of any harassment events that reach users, analyzing the conversation trajectory to identify detection gaps, and adapt classifier models, monitoring thresholds, and session-level behavioral controls based on findings. Update conduct policies as new misuse patterns are identified.",
+    "tooling": "**Categories.** Content Moderation (Trust & Safety); AI Guardrails\n\n**Abuse & harassment detection**\n\n- Meta Llama Guard 3 — https://github.com/meta-llama/PurpleLlama\n- Google ShieldGemma (harassment) — https://ai.google.dev/gemma/docs/shieldgemma\n- IBM Granite Guardian (toxicity/profanity detectors) — https://github.com/ibm-granite/granite-guardian\n- NVIDIA NeMo Guardrails (moderation rails) — https://github.com/NVIDIA/NeMo-Guardrails",
+    "path": "controls/obscene-degrading-abusive-content/AISECA-ODA-002.md"
+  },
+  {
+    "id": "AISECA-VC-001",
+    "title": "Third-party model risk",
+    "domain": "Value Chain & Component Integration",
+    "severity": "High",
+    "mitre_atlas": "Conditional: Resource Development – Publish Poisoned Models (AML.T0058); Resource Development – Publish Poisoned Datasets (AML.T0019); Initial Access – AI Supply Chain Compromise (AML.T0010)",
+    "nist_ai_rmf": [
+      "GOV-3",
+      "MAP-5",
+      "MAN-1"
+    ],
+    "stakeholders": [
+      "Leadership"
+    ],
+    "references": [
+      "https://www.reversinglabs.com/blog/rl-identifies-malware-ml-model-hosted-on-hugging-face"
+    ],
+    "risk": "A third-party AI model introduces security, reliability, privacy, or compliance risks that are outside the organization's direct control.",
+    "scenario": "An organization deploys a third-party foundation model that contains undisclosed vulnerabilities or biased behaviors, leading to security gaps, harmful outputs, or regulatory exposure that the organization cannot fully detect or control.",
+    "tier1": "Define requirements for third-party model selection, including security, safety, and transparency criteria, and restrict use to approved vendors that meet baseline risk and compliance standards.",
+    "tier2": "Implement evaluation and onboarding controls for third-party models, including security testing, performance validation, and contractual safeguards. Continuously monitor model behavior in production for deviations, unsafe outputs, or policy violations, and establish processes for incident response and vendor escalation.",
+    "tier3": "Continuously assess third-party model risk through ongoing testing, benchmarking, and comparative evaluations. Track metrics such as incident frequency, model performance drift, and compliance gaps, and adapt vendor selection, integration strategies, and fallback mechanisms to reduce dependency and improve resilience.",
+    "tooling": "**Categories.** AI-SPM / AI Supply Chain Security (model scanning); TPRM; MRM (model risk management)\n\n**Model supply-chain scanning & provenance**\n\n- Palo Alto Networks ModelScan (Protect AI) (unsafe serialization/pickle threats) — https://github.com/protectai/modelscan\n- Cisco AI Defense Model Provenance Kit (base-model fingerprinting) — https://github.com/cisco-ai-defense/model-provenance-kit\n- Cisco AI Defense Pickle Fuzzer — https://github.com/cisco-ai-defense\n- picklescan (used by Hugging Face Hub) — https://github.com/mmaitre314/picklescan\n- OpenSSF model-signing (Google/NVIDIA-backed) (signature verification) — https://github.com/sigstore/model-transparency\nPre-deployment evals:\n- NVIDIA garak — https://github.com/NVIDIA/garak\n- Microsoft PyRIT — https://github.com/Azure/PyRIT",
+    "path": "controls/value-chain-component-integration/AISECA-VC-001.md"
+  },
+  {
+    "id": "AISECA-VC-002",
+    "title": "Uncontrolled model updates",
+    "domain": "Value Chain & Component Integration",
+    "severity": "High",
+    "mitre_atlas": "Conditional: Initial Access – AI Supply Chain Compromise (AML.T0010); Defense Evasion – AI Supply Chain Rug Pull (AML.T0109); AI Attack Staging – Manipulate AI Model (AML.T0018)",
+    "nist_ai_rmf": [
+      "GOV-3",
+      "MAP-5",
+      "MAN-1"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [
+      "https://arxiv.org/abs/2307.09009"
+    ],
+    "risk": "Changes to an AI model are made without proper review, testing, approval, or governance.",
+    "scenario": "Your company uses an AI model via API to review contracts. The vendor silently pushes a model update. The AI starts missing key clauses it used to catch. Nobody changed anything on your end. Contracts go out with gaps no one noticed.",
+    "tier1": "Define update approval requirements through vendor contracts that mandate advance notice of model changes, changelog access, and pinned version availability so updates are adopted on your terms. Constrain exposure by documenting each external model's behavioral baseline, version-locking critical use cases, and using abstraction layers that allow controlled transitions between model versions.",
+    "tier2": "Enforce change monitoring by running automated behavioral regression tests against external models on a scheduled basis, flagging deviations in tone, accuracy, safety, or compliance that may signal an undisclosed update. Monitor vendor release channels and model version identifiers for signs of change, log responses over time to build an auditable behavioral record, and maintain escalation paths to suspend a model if a disruptive update is detected.",
+    "tier3": "Continuously validate behavioral drift by running longitudinal evaluation suites that track external model behavior over time, surfacing gradual shifts in safety, fairness, or task performance that accumulate across multiple silent updates. Adapt by maintaining vendor switching contingency plans, updating contractual requirements as the model landscape evolves, and re-evaluating dependency on any single external model as part of regular AI risk reviews.",
+    "tooling": "**Categories.** ModelOps (model registry & release governance); SSCS (signing/gates); AI Governance\n\n**Model registry, signing & release gates**\n\n- MLflow Model Registry (Databricks) (staged approvals) — https://github.com/mlflow/mlflow\n- Sigstore cosign (OpenSSF) — https://github.com/sigstore/cosign\n- OpenSSF model-signing (Google/NVIDIA-backed) (verification at deploy time) — https://github.com/sigstore/model-transparency\n- Argo CD (Intuit-originated/CNCF) (GitOps approval gates) — https://github.com/argoproj/argo-cd\n- Kubeflow Pipelines (Google-originated) (governed retraining) — https://github.com/kubeflow/pipelines",
+    "path": "controls/value-chain-component-integration/AISECA-VC-002.md"
+  },
+  {
+    "id": "AISECA-VC-003",
+    "title": "Security weaknesses inherited from orchestration frameworks or SDKs",
+    "domain": "Value Chain & Component Integration",
+    "severity": "High",
+    "mitre_atlas": "Conditional: Initial Access – AI Supply Chain Compromise (AML.T0010); Initial Access – Exploit Public-Facing Application (AML.T0049); Privilege Escalation – Escape to Host (AML.T0105); Impact – Machine Compromise (AML.T0112)",
+    "nist_ai_rmf": [
+      "GOV-3",
+      "MAP-5",
+      "MAN-1"
+    ],
+    "stakeholders": [
+      "Builder / Maintainer"
+    ],
+    "references": [],
+    "risk": "Weaknesses in AI frameworks, orchestration platforms, or software development kits introduce security risks.",
+    "scenario": "A financial services firm deploys an AI agent built on a popular orchestration SDK to automate loan processing. An unpatched deserialization vulnerability allows an attacker to craft a malicious loan application payload. The agent processes it without sanitization, granting the attacker remote code execution on the internal server handling sensitive applicant financial records.",
+    "tier1": "Establish policies and configurations that govern the selection and use of AI orchestration frameworks. Publish an approved components list defining vetted frameworks, and required minimum or known-good versions. Pin dependency versions, enforce signed and verified package sources, isolate agent runtimes in sandboxes with no direct access to sensitive systems or data stores. Integrate AI components into the enterprise software bill of materials (SBOM) and vulnerability management program.",
+    "tier2": "Enforce composition scanning in CI/CD pipelines to detect vulnerable or prohibited depencies. Block builds that fail policy.",
+    "tier3": "Audit SBOMs and dependency inventories for drift. Review vendor and open-source project security posturesand feed findings into updated approved-components lists. Integrate supply chain incidents into enterprise risk reporting, vendor management, and external threat intelligence sharing, so lessons from industry disclosures and emerging AI-specific attack research continuously strengthen the control environment.",
+    "tooling": "**Categories.** SCA; AST (SAST); SSCS; ASPM\n\n**Framework dependency & code scanning**\n\n- Google OSV-Scanner — https://github.com/google/osv-scanner\n- GitHub Dependabot (alerts/updates) — https://github.com/dependabot/dependabot-core\n- GitHub CodeQL (SAST on agent/orchestration code) — https://github.com/github/codeql\n- Microsoft SBOM Tool (framework inventory) — https://github.com/microsoft/sbom-tool\n- Meta CyberSecEval (Purple Llama) (framework-level LLM risk benchmarking) — https://github.com/meta-llama/PurpleLlama",
+    "path": "controls/value-chain-component-integration/AISECA-VC-003.md"
+  },
+  {
+    "id": "AISECA-VC-004",
+    "title": "Compromised, Untrusted, or Malicious Agent Tool Ecosystem",
+    "domain": "Value Chain & Component Integration",
+    "severity": "High",
+    "mitre_atlas": "Direct: Resource Development – Publish Poisoned AI Agent Tool (AML.T0104); Initial Access – AI Supply Chain Compromise (AML.T0010); Execution – AI Agent Tool Invocation (AML.T0053); Persistence – AI Agent Tool Poisoning (AML.T0110); Credential Access – AI Agent Tool Credential Harvesting (AML.T0098); Exfiltration – Exfiltration via AI Agent Tool Invocation (AML.T0086); Impact – Machine Compromise (AML.T0112)",
+    "nist_ai_rmf": [
+      "GOV-3",
+      "MAP-5",
+      "MAN-1"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [],
+    "risk": "Tools, services, registries, or ecosystems used by AI agents are compromised, malicious, or otherwise untrustworthy.",
+    "scenario": "A development team enables an open MCP tool registry for their AI coding agents to accelerate workflow automation. A threat actor publishes a tool named \"git-security-scanner\" that mimics a well-known open-source security tool, embedding hidden instructions in the tool's schema definition that cause the agent to pass sensitive context — including environment variables, API credentials, and repository contents — as tool input parameters. The agent, configured to auto-discover tools matching its task context, registers and invokes the malicious tool through the approved discovery mechanism. The tool executes arbitrary code within the agent's sandbox, enumerates accessible repositories, and exfiltrates source code and credentials via outbound HTTPS to an attacker-controlled endpoint. The exfiltration goes undetected because the tool appears to function correctly, was registered through a legitimate channel, and the activity resembles normal tool usage in logs.",
+    "tier1": "Restrict MCP endpoints and tool integrations to an approved allowlist of trusted sources, with each endpoint subject to security assessment and approval before being made available to agents. Define validation requirements for all MCP and tool responses, including schema validation, data integrity checks, and plausibility bounds for returned data. Establish trust boundaries that treat all MCP-sourced and tool-sourced data as external and untrusted by default, requiring validation before the agent can act on it. Require that MCP and tool connections include mutual authentication and transport-layer encryption. Define incident response procedures for suspected endpoint compromise, including automatic isolation and fallback to cached or alternative data sources. Require that all tool and MCP server registrations include a verified provenance record covering publisher identity, source code repository (where applicable), cryptographic signature, and version history. Prohibit auto-registration of tools from unverified sources. Define tool schema integrity requirements specifying that tool descriptions, parameter definitions, and capability declarations are treated as a trust-sensitive input surface. Require that schemas are validated against a known-good baseline before registration and cannot contain embedded instructions, hidden parameters, or capability claims that exceed declared scope. Establish a tool capability classification system that categorizes each tool by the sensitivity of data it can access and the reversibility of actions it can perform, with escalating vetting requirements for higher-sensitivity tiers. Define maximum permission boundaries for tool integrations using least-privilege principles, specifying that tools receive only the permissions required for their declared function and cannot inherit ambient authority from the agent's execution environment.",
+    "tier2": "Enforce authentication and integrity checks on all MCP and tool interactions, including cryptographic verification of endpoint identity and response integrity. Implement runtime validation of responses against expected schemas, data ranges, and behavioral baselines. Monitor endpoint behavior for signs of compromise, including unexpected changes in response patterns, latency anomalies, schema violations, and data values outside historical ranges. Deploy canary queries and synthetic validation requests to proactively detect compromised endpoints. Log all MCP and tool interactions with full context including endpoint identity, request, response, and validation results. Enforce tool schema validation at registration time and at each invocation, detecting schema drift, parameter injection, and capability claims that deviate from the approved baseline. Block tool execution when schema integrity cannot be confirmed. Implement tool sandboxing that isolates each tool's execution environment, preventing tools from accessing resources, network endpoints, file paths, or credentials outside their declared scope. Enforce egress controls that restrict outbound connections from tool execution contexts to approved destinations. Monitor tool discovery and registration events for anomalous patterns including rapid registration of multiple tools, tools mimicking names of known legitimate tools (typosquatting), and tools requesting permissions disproportionate to their declared function. Enforce tool response sanitization that strips instruction-like content, role-override attempts, and embedded directives from tool outputs before they enter the agent's context, preventing tool responses from acting as indirect prompt injection vectors.",
+    "tier3": "Continuously test MCP and tool trust boundaries using adversarial simulations that model compromised endpoints returning manipulated, malformed, or poisoned responses, and malicious tools attempting schema poisoning, credential harvesting, and sandbox escape. Track metrics including MCP validation failure rate, endpoint anomaly detection rate, time-to-detection for simulated compromises, agent decision accuracy when operating on MCP-sourced data, tool schema drift detection rate, malicious tool registration detection rate, sandbox escape attempt rate, and unauthorized egress attempt rate from tool execution contexts. Conduct periodic security assessments of approved MCP endpoints and registered tools, including penetration testing, supply chain risk reviews, and schema integrity audits. Simulate tool registry poisoning scenarios where adversarial tools mimic legitimate tools and measure detection effectiveness across the registration, invocation, and response validation pipeline. Adapt validation controls, trust thresholds, registration vetting requirements, and sandbox configurations based on observed compromise scenarios, emerging MCP-specific and tool-specific attack patterns, and changes to the approved endpoint and tool registries.",
+    "tooling": "**Categories.** AI-SPM / AI Supply Chain Security; SSCS (malicious package detection)\n\n**Registry & package threat detection**\n\n- Datadog GuardDog (malicious PyPI/npm detection) — https://github.com/DataDog/guarddog\n- Datadog Supply-Chain Firewall (blocks malicious installs) — https://github.com/DataDog/supply-chain-firewall\n- Cisco AI Defense Skill Scanner — https://github.com/cisco-ai-defense/skill-scanner\n- Cisco AI Defense MCP Scanner — https://github.com/cisco-ai-defense/mcp-scanner\n- Snyk Agent Scan (agents, skills & MCP servers) — https://github.com/snyk/agent-scan\n- OpenSSF Scorecard (ecosystem-health signals) — https://github.com/ossf/scorecard",
+    "path": "controls/value-chain-component-integration/AISECA-VC-004.md"
+  },
+  {
+    "id": "AISECA-VC-005",
+    "title": "Insecure plugins or tools",
+    "domain": "Value Chain & Component Integration",
+    "severity": "High",
+    "mitre_atlas": "Conditional: Initial Access – AI Supply Chain Compromise (AML.T0010); Execution – AI Agent Tool Invocation (AML.T0053); Privilege Escalation – Escape to Host (AML.T0105); Exfiltration – Exfiltration via AI Agent Tool Invocation (AML.T0086); Impact – Machine Compromise (AML.T0112)",
+    "nist_ai_rmf": [
+      "GOV-3",
+      "MAP-5",
+      "MAN-1"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [],
+    "risk": "Plugins, extensions, or connected tools contain vulnerabilities that can be exploited to compromise AI systems or data.",
+    "scenario": "An AI system uses a third-party plugin or internal tool with weak security controls, allowing an attacker to exploit it to access sensitive data or execute unintended actions. As a result, the AI becomes a gateway to compromise connected systems or information.",
+    "tier1": "Define security requirements for all plugins, tools, and integrations used by the AI system, including what data they can access and what actions they are allowed to perform. Ensure each integration has a clear purpose and only the minimum necessary permissions.",
+    "tier2": "Enforce the use of an approved allowlist of plugins and tools, ensuring only vetted integrations can be accessed by the AI system. Restrict each integration to the minimum necessary permissions, validate inputs and outputs, and monitor all interactions for misuse or unexpected behavior.",
+    "tier3": "Continuously adapt by monitoring for vulnerabilities and threat intelligence related to approved plugins and tools, as well as observing usage for unusual behavior. Regularly review and update the allowlist, remove or restrict risky integrations, and refine controls based on emerging threats.",
+    "tooling": "**Categories.** SCA; AST; AI-SPM; CWPP (sandboxing)\n\n**Plugin/tool vulnerability scanning & isolation**\n\n- Google OSV-Scanner (CVEs in tool dependencies) — https://github.com/google/osv-scanner\n- GitHub Dependabot — https://github.com/dependabot/dependabot-core\n- GitHub CodeQL (tool code) — https://github.com/github/codeql\n- Cisco AI Defense Skill Scanner — https://github.com/cisco-ai-defense/skill-scanner\n- Google gVisor (sandboxed execution) — https://github.com/google/gvisor\n- AWS Firecracker — https://github.com/firecracker-microvm/firecracker",
+    "path": "controls/value-chain-component-integration/AISECA-VC-005.md"
+  },
+  {
+    "id": "AISECA-VC-006",
+    "title": "Dependency \"Cool-down\" Violations",
+    "domain": "Value Chain & Component Integration",
+    "severity": "Medium",
+    "mitre_atlas": "Conditional: Initial Access – AI Supply Chain Compromise (AML.T0010); AI Supply Chain Rug Pull (AML.T0109)",
+    "nist_ai_rmf": [
+      "GOV-3",
+      "MAP-5",
+      "MAN-1"
+    ],
+    "stakeholders": [
+      "Cybersecurity / Assurance"
+    ],
+    "references": [],
+    "risk": "New dependencies are adopted before sufficient stabilization, validation, or security review has occurred.",
+    "scenario": "Unvalidated dependencies introduce vulnerabilities before security review is completed.",
+    "tier1": "Define lifecycle management requirements for all AI components in the production stack — including models, agent frameworks, SDKs, plugins, and MCP servers — specifying maximum permitted lag between a security patch or end-of-support date and required upgrade or decommission. Establish a component inventory tracking version, support status, and known vulnerability exposure for every AI dependency.",
+    "tier2": "Enforce component lifecycle controls through automated monitoring of AI dependency versions against published CVE databases, vendor security advisories, and end-of-support announcements. Implement alerting when any production AI component enters a cool-down violation state — defined as operating on a version with a known exploitable vulnerability or past its vendor-supported lifecycle — with defined remediation SLAs.",
+    "tier3": "Continuously validate AI dependency lifecycle controls by auditing production component inventories against current vulnerability and support status data on a defined cadence. Track metrics including mean time to patch for AI components, cool-down violation rate, and percentage of production AI stack on vendor-supported versions. Conduct periodic supply chain exercises simulating exploitation of known vulnerabilities in unpatched AI dependencies.",
+    "tooling": "**Categories.** SSCS; SCA (dependency policy / cool-down enforcement)\n\n- Datadog Supply-Chain Firewall (policy-blocks risky or newly published packages at install) — https://github.com/DataDog/supply-chain-firewall\n- Datadog GuardDog — https://github.com/DataDog/guarddog\n- GitHub Dependabot (cooldown settings for version updates) — https://github.com/dependabot/dependabot-core\n- Google deps.dev (package age/vulnerability intelligence) — https://deps.dev\n- Google OSV-Scanner — https://github.com/google/osv-scanner\n- OpenSSF Scorecard (release-hygiene signals) — https://github.com/ossf/scorecard",
+    "path": "controls/value-chain-component-integration/AISECA-VC-006.md"
+  }
+]

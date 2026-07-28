@@ -1,0 +1,57 @@
+name: Challenge a control
+description: A control is wrong, unworkable, mis-tiered, or misses how this actually fails in production.
+title: "[Challenge] AISECA-XXX-000: "
+labels: ["feedback", "challenge"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the most valuable issue type in the repo. If you have tried to implement a control and it did not survive contact with a real environment, tell us exactly where it broke.
+  - type: input
+    id: control_id
+    attributes:
+      label: Control ID
+      description: The ID from the control file, e.g. AISECA-INFOSEC-004.
+      placeholder: AISECA-INFOSEC-004
+    validations:
+      required: true
+  - type: dropdown
+    id: problem
+    attributes:
+      label: What is wrong with it?
+      options:
+        - The control is not implementable as written
+        - It is in the wrong tier
+        - The severity rating is wrong
+        - The risk or definition is inaccurate
+        - The scenario is unrealistic or misattributed
+        - The NIST AI RMF or MITRE ATLAS mapping is wrong
+        - It duplicates or contradicts another control
+        - It assumes tooling or org structure most teams do not have
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: detail
+    attributes:
+      label: What happens instead
+      description: Be specific. What did you try, in what environment, and how did it fail or mislead?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What should it say instead
+      description: Suggested replacement wording, if you have one. A rough draft is fine — we would rather edit than guess.
+  - type: dropdown
+    id: basis
+    attributes:
+      label: What is this based on?
+      options:
+        - I implemented this in production
+        - I evaluated it but did not deploy it
+        - I audited or assessed an org against it
+        - Research or published work
+        - Reasoning from experience, not a specific deployment
+    validations:
+      required: true
