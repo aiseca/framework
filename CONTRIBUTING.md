@@ -1,6 +1,6 @@
 # Contributing to the AISECA Tiered Control Framework
 
-This framework is a draft published for review. Practitioner disagreement is the input we want most.
+v1.0 is released and v1.1 is in progress. Practitioner disagreement is the input we want most — it is what moves the framework between versions.
 
 For general AISECA contribution guidance and the code of conduct, see the [org guidelines](https://github.com/aiseca/.github/blob/main/CONTRIBUTING.md).
 

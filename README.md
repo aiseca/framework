@@ -2,9 +2,9 @@
 
 A practitioner-led, vendor-agnostic control framework for securing enterprise AI. Each risk is mapped to a NIST AI 600-1 GenAI risk domain and to MITRE ATLAS where a technique applies, then answered with three tiers of control: define it, enforce it, validate it.
 
-**Version:** 0.4 (draft) · **Controls:** 57 across 12 risk domains · **License:** [CC BY 4.0](LICENSE)
+**Version:** 1.0 · **Controls:** 57 across 12 risk domains · **License:** [CC BY 4.0](LICENSE)
 
-> This is a working draft published for practitioner review. Nothing here is final. Disagreement is the point — see [Giving feedback](#giving-feedback).
+> v1.0 is a released version of the framework. v1.1 is in progress — practitioner feedback is what shapes it, and disagreement is the point. See [Giving feedback](#giving-feedback).
 
 ---
 
