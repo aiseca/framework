@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+title: AISECA Tiered Control Framework
+message: >-
+  If you use this framework in research, reporting, or a security
+  program, please cite it as below.
+type: dataset
+authors:
+  - name: AISECA — AI Security Alliance
+    website: https://aiseca.org
+    alias: AISECA
+abstract: >-
+  A practitioner-led, vendor-agnostic control framework for securing
+  enterprise AI. 57 controls across 12 GenAI risk domains from NIST AI
+  600-1, mapped to NIST AI RMF subcategories and MITRE ATLAS techniques.
+  Each risk is addressed at three tiers: Define & Constrain (policy and
+  boundaries), Enforce & Monitor (technical enforcement and detection),
+  and Validate & Adapt (adversarial testing and continuous assurance).
+keywords:
+  - AI security
+  - AI governance
+  - security controls
+  - NIST AI 600-1
+  - NIST AI RMF
+  - MITRE ATLAS
+  - generative AI
+  - agentic AI
+  - risk management
+license: CC-BY-4.0
+repository-code: https://github.com/aiseca/framework
+url: https://aiseca.org/framework
+version: "0.4"
+date-released: "2026-07-28"
