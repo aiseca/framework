@@ -40,6 +40,7 @@ We would rather have an argument than a citation. Three ways in, in order of use
 1. **Open an issue** — [challenge a control](../../issues/new?template=challenge-control.yml), [propose a new one](../../issues/new?template=propose-control.yml), or [fix a mapping](../../issues/new?template=mapping-correction.yml). The forms ask which control ID and what your operational experience was.
 2. **Open a pull request** — edit the control file directly. One control per PR keeps review tractable. See [CONTRIBUTING.md](CONTRIBUTING.md).
 3. **Start a discussion** — [org discussions](https://github.com/orgs/aiseca/discussions) for anything broader than one control: tier boundaries, domain coverage, framework structure.
+4. **Join the Slack** — [aiseca.slack.com](https://join.slack.com/t/aiseca/shared_invite/zt-45kw1y3v4-itT~Id74tN8kNdyinNxrGA) for working conversation with the board and other practitioners.
 
 If you have implemented one of these controls in production and it did not work as written, that is the single most valuable contribution you can make.
 
